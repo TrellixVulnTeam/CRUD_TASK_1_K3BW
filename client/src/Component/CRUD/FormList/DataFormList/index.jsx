@@ -15,7 +15,19 @@ import TableBody from '@mui/material/TableBody';
  */
  import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
  import BorderColorIcon from '@mui/icons-material/BorderColor';
+// import AddForm from '../../AddForm';
+import UpdateForm from '../../UpdateForm';
 // import UpdateForm from '../../UpdateForm';
+
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
+
 DataFormList.propTypes = {
     rows: PropTypes.array,
 };
@@ -25,7 +37,19 @@ DataFormList.propTypes = {
  * @param {*} param0 
  * @returns 
  */
-function DataFormList({rows}) {
+function DataFormList({rows},props) {
+    const [open, setOpen] = React.useState(false);
+
+    // const handleClickOpen = () => {
+    //   setOpen(true);
+    // };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+
+
     const deleteRow = async (id) => {
         if (window.confirm("Are you sure you want to delete?")) {
             axios.delete('http://localhost:3001/deleterow/'+ id)
@@ -33,12 +57,20 @@ function DataFormList({rows}) {
           }
     };
     const [data, setData] = useState(null);
+    // const [count, setCount] = useState(0);
+
     const updateRow = async (row) => {
+        setOpen(true);
         setData(row);
-        
+        // setCount(1);
+        console.log(data);
     };
+
+
+    // props.parentCallback({data});
     if(!rows) return;
     return (
+        <>
         <TableBody>
             {rows.map((row) => (
                 <TableRow
@@ -61,7 +93,34 @@ function DataFormList({rows}) {
                 </TableCell>
                 </TableRow>
             ))}
+            
+           
         </TableBody>
+        <div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                {"Form Sua Thong Tin Nhan Vien"}
+                </DialogTitle>
+                
+                    <UpdateForm data={data}/>
+                
+                <DialogActions>
+                    <Button onClick={handleClose}>Close</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+        </>
     );
 }
 export default DataFormList;
+
+
+
+
+
+

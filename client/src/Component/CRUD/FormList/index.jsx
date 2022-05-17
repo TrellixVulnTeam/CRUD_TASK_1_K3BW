@@ -33,11 +33,9 @@ function FormList() {
       axios.get('http://localhost:3001/listdata')
         .then((res) => {
           setData(res.data);
-
         })
         .catch(err => console.log(err));
-
-    }, [data]);
+    },[data]); ///////////////////////////////////////////////
     return (
         <TableContainer component={Paper}>
 

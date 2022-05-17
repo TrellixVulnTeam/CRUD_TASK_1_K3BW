@@ -3,23 +3,29 @@ import axios from "axios";
 import './style.css';
 
 import TextField from '@mui/material/TextField';
-import { Grid } from '@mui/material';
+// import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+// import MenuItem from '@mui/material/MenuItem';
+// import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+// const updateDataForm2 = () => {
+//   console.log('done')
+// }
 
-
-function UpdateForm() {
-  const [name, setName] = useState("");
-  const [age, SetAge] = useState("");
-  const [sex, setSex] = useState("");
-  const [date, setDate] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-
+function UpdateForm({data}) {
+  const [id, setID] = useState(data.id);
+  const [name, setName] = useState(data.name);
+  const [age, setAge] = useState(data.age);
+  const [sex, setSex] = useState(data.sex);
+  const [date, setDate] = useState(data.date);
+  const [email, setEmail] = useState(data.email); 
+  const [address, setAddress] = useState(data.address);
   const dataForm = {
+    id: id,
     name: name,
     age: age,
     sex: sex,
@@ -27,116 +33,114 @@ function UpdateForm() {
     email: email,
     address: address,
   }
-  const addDataForm = () =>{
-    console.log({dataForm});
+  const updateDataForm = () =>{
+    console.log("dataForm", dataForm);
     axios({
       method: 'post',
-      url: 'http://localhost:3001/create',
+      url: 'http://localhost:3001/update',
       data: dataForm
     })
     .then(function (response) {
+      
       alert("insert success");
     })
     .catch(function (error) {
         console.log(error);
     });
   }
- 
+  if(!data) return;
+  function handleName(e) {
+    setName(e.target.value)
+  }
+  
   return (
-    <div className='container center' >
-      <Grid className='container-gird' container spacing={2} xs={4}>
-       <Grid className='item-Gird' item xs={412}>
-              <div className='textFieldItem'>
-                <h2>UPDATE ADD</h2>
-              </div>
-              <div className='textFieldItem'>
-                <TextField 
-                  fullWidth InputLabelProps={{ shrink: true, required: true }} 
-                  label="Name" 
-                  id="fullWidth" 
-                  
 
-                  onChange={(event) => {
-                    setName(event.target.value);
+    <div className='container center' >
+      <form action="/" method="POST" onSubmit={(e) => { e.preventDefault(); alert('Submitted form!'); this.handleClose(); } }>
+          <div className='textFieldItem'>
+            <TextField 
+              fullWidth InputLabelProps={{ shrink: true, required: true }} 
+              label="Name" 
+              id="fullWidth" 
+              defaultValue={data.name}
+              onChange={handleName}
+            />
+          </div>
+          <div className='textFieldItem'>
+            <TextField 
+              fullWidth InputLabelProps={{ shrink: true, required: true }} 
+              label="Age" 
+              id="fullWidth" 
+              defaultValue={data.age}
+              onChange={(event) => {
+                setAge(event.target.value);
+              }}
+            />
+          </div>
+          <div className='textFieldItem'>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                  Sex
+                </InputLabel>
+                <NativeSelect
+                  defaultValue={(data.sex)==="Male"?("Male"):("Female")}
+                  inputProps={{
+                    name: 'Sex',
+                    id: 'uncontrolled-native',
                   }}
-                />
-              </div>
-              <div className='textFieldItem'>
-                <TextField 
-                  fullWidth InputLabelProps={{ shrink: true, required: true }} 
-                  type="number" 
-                  label="Age" 
-                  id="fullWidth" 
                   onChange={(event) => {
-                    SetAge(event.target.value);
+                    setSex(event.target.value);
                   }}
-                />
+                >
+                  <option value={(data.sex)==="Male"?("Male"):("Female")}>{(data.sex)==="Male"?("Male"):("Female")}</option>
+                  <option value={(data.sex)==="Female"?("Male"):("Female")}>{(data.sex)==="Female"?("Male"):("Female")}</option>
+                </NativeSelect>
+              </FormControl>
+            </Box>
+          </div>
+          <div className='textFieldItem'>
+            <TextField 
+              fullWidth InputLabelProps={{ shrink: true, required: true }} 
+              label="Date" 
+              id="fullWidth" 
+              // value={data.date}
+              type="date"
+              onChange={(event) => {
+                setDate(event.target.value);
+              }}
+            />
+          </div>
+          <div className='textFieldItem'>
+            <TextField 
+              fullWidth InputLabelProps={{ shrink: true, required: true }} 
+              label="Email" 
+              id="fullWidth" 
+              defaultValue={data.email}
+
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+            />
+          </div>
+          <div className='textFieldItem'>
+            <TextField 
+              fullWidth InputLabelProps={{ shrink: true, required: true }} 
+              label="Address" 
+              id="fullWidth" 
+              defaultValue={data.address}
+
+              onChange={(event) => {
+                setAddress(event.target.value);
+              }}
+            />
                 
-              </div>
-              <div className='textFieldItem'>
-                <Grid xs={12} spacing={2} container>
-                  <Grid xs={2} item>
-                    <InputLabel 
-                    id="demo-simple-select-label" 
-                    with="30%" 
-                    onChange={(event) => {
-                      setSex(event.target.value);
-                    }}
-                    >Sex</InputLabel>
-                  </Grid>
-                  <Grid xs={6} item>
-                  <Select
-                    fullWidth
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Sex"
-                    onChange={(event) => {
-                      setSex(event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"Male"}>Male</MenuItem>
-                    <MenuItem value={"Female"}>Female</MenuItem>
-                  </Select>
-                  </Grid>
-                </Grid>
-              </div>
-              <div className='textFieldItem'>
-                <TextField 
-                  fullWidth type="date"  
-                  InputLabelProps={{ shrink: true, required: true }}  
-                  label="Date of birth" id="fullWidth" 
-                  onChange={(event) => {
-                    setDate(event.target.value);
-                  }}
-                />
-              </div>
-              <div className='textFieldItem'>
-                <TextField 
-                  fullWidth type="email" 
-                  InputLabelProps={{ shrink: true, required: true }} 
-                  label="Email" 
-                  id="fullWidth" 
-                  onChange={(event) => {
-                    setEmail(event.target.value);
-                  }}
-                />
-              </div>
-              <div className='textFieldItem'>
-                <TextField 
-                  fullWidth label="Address" 
-                  InputLabelProps={{ shrink: true, required: true }} 
-                  id="fullWidth" 
-                  onChange={(event) => {
-                    setAddress(event.target.value);
-                  }}
-                />
-              </div>
-              <div className='textFieldItem'>
-                <Button onClick={addDataForm} variant="contained">Submit  <AddCircleIcon/> </Button>
-              </div>
-        </Grid>
-      </Grid>
-      
+          </div>
+          <div className='textFieldItem'>
+            <Button onClick={updateDataForm} variant="contained">Submit <AddCircleIcon/> </Button>
+          </div>
+        
+      </form>
     </div>
   );
 }

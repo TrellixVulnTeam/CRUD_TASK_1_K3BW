@@ -1,7 +1,16 @@
+// const express = require("express");
+// const app = express();
+// app.listen(3001, () => {
+//     console.log("aaaaa");
+// });
+// app.use('/',routers);
+
+
 const express = require("express");
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
+
 var bodyParser = require('body-parser');    
 
 app.use(cors('http://localhost:3000'));
@@ -27,6 +36,8 @@ routing API
     /**
     *POST API create data
     */
+
+
     app.post('/create', (req, res) => {
         const data = req.body;
         if(data.name == "" || data.age == ""|| data.sex == "" || data.email == "" || data.date == "" || data.address == ""){
@@ -57,8 +68,23 @@ routing API
         const id = req.params.id;
         db.query("DELETE FROM `CRUD-Task1`.NhanVien WHERE id = ?",id, function(err, result) {
             if(err) console.log({err});
-            else console.log("success");
         }); 
+    });
+    app.post('/update', (req, res) => {
+        const data = req.body;
+        if(data.name == "" || data.age == ""|| data.sex == "" || data.email == "" || data.date == "" || data.address == ""){
+            return res.send('<p>khong de trong cac truong</p>');
+        }
+        let today = new Date(data.date);
+
+        let date=today.getDate() + "-"+ parseInt(today.getMonth()+1) +"-"+today.getFullYear();
+
+        const sql = "UPDATE `CRUD-Task1`.`NhanVien` SET `name` = ? , `age` = ?, `sex` = ?, `email` = ?, `date` = ?, `address` = ? WHERE (`id` = '?')";
+        const datasql = [data.name, data.age, data.sex, data.email, today, data.address, data.id]
+        db.query(sql,datasql, (err, d) => {
+            if (err) throw err;
+        });
+
     });
 /**
 routing API
