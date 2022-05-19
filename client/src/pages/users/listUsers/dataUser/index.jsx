@@ -1,7 +1,7 @@
 import React , { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
-import UpdateForm from '../../UpdateForm';
+import FormUser from '../../formUsers';
 import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle} from '@mui/material';
  import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
  import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -9,7 +9,7 @@ import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTit
 
 
 
-DataFormList.propTypes = {
+ DataUser.propTypes = {
     rows: PropTypes.array,
 };
 
@@ -18,7 +18,7 @@ DataFormList.propTypes = {
  * @param {*} param0 
  * @returns 
  */
-function DataFormList({rows},props) {
+function DataUser({rows},props) {
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
       setOpen(false);
@@ -33,7 +33,9 @@ function DataFormList({rows},props) {
     const updateRow = async (row) => {
         setOpen(true);
         setData(row);
+
     };
+    
     if(!rows) return;
     return (
         <>
@@ -68,11 +70,10 @@ function DataFormList({rows},props) {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Form Sua Thong Tin Nhan Vien"}
+                        {"Form Update Thong Tin Nhan Vien"}
                     </DialogTitle>
-                    
-                        <UpdateForm data={data}/>
-                    
+                    <FormUser data={data}/>
+
                     <DialogActions>
                         <Button onClick={handleClose}>Close</Button>
                     </DialogActions>
@@ -81,7 +82,7 @@ function DataFormList({rows},props) {
         </>
     );
 }
-export default DataFormList;
+export default DataUser;
 
 
 

@@ -1,9 +1,9 @@
 const knex = require('../../config/db/knexfile');
 const helper = require('../validate/helperReq');
+const db = require('../models/nhanvienModel');
 
 async function getdata(req, res) {
-    const data = await knex.from('nhanvien').select('*');
-    return res.send(data);
+    return res.send(await db.getAll());
 };
 
 async function create(req, res) {
@@ -11,31 +11,25 @@ async function create(req, res) {
     const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
     const checknullinput = helper.checkNullInput(data)
     const helperEmail = helper.helperEmail(data.email);
-
-    if(checknullinput == true){
-        return console.log("input not null");
-    }else{
-        if(helperEmail == false){
-            return console.log("Incorrect email format ");
-        }else{
-            if(checkEmailExist){
-                return console.log("Email already exists");
-            }
+    if(checknullinput == false || helperEmail == true || checkEmailExist){
+        try {
+            await db.insertData(data);   
+        } catch (error) {
+            console.log('Error:controller insert', error);
+            return {status: 'error', message: 'Duplicate'};
         }
     }
-    knex('nhanvien').insert(data)
-      .then( function (result) {
-          res.json({ success: true, message: 'ok' });     // respond back to request
-       })
+    return res.send("insert khoong thanh cong");
 
 };
 async function getDelete(req, res){
-   knex('nhanvien')
-    .del()
-    .where('id', req.params.id)
-    .then( function (result) {
-        res.json({ success: true, message: 'ok' });     // respond back to request
-     })
+    try {
+        await db.deleteFindID(req.params.id);
+        return res.send("them thanh cong");
+    } catch (error) {
+        console.log('Error:controller delete', error);
+        return {status: 'error', message: 'Duplicate'};
+    }
 };
 
 async function postUpdate(req, res){
@@ -51,27 +45,20 @@ async function postUpdate(req, res){
         address: req.body.address,
     }
     const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
+    console.log(checkEmailExist.id);
     const checknullinput = helper.checkNullInput(data)
     const helperEmail = helper.helperEmail(data.email);
     
-    if(checknullinput == true){
-        return console.log("input not null");
-    }else{
-        if(helperEmail == false){
-            return console.log("Incorrect email format ");
-        }else{
-            if(checkEmailExist){
-                return console.log("Email already exists");
-            }
+
+    if(checknullinput == false || helperEmail == true || checkEmailExist){
+        try {
+            await db.updateData(data);   
+        } catch (error) {
+            console.log('Error:controller update', error);
+            return {status: 'error', message: 'Duplicate'};
         }
     }
-    console.log(data);
-    knex('nhanvien')
-    .update(data)
-    .where('id', data.id )
-    .then( function (result) {
-            // respond back to request
-     })
+    return res.send("update khoong thanh cong");
  };
 
 const nhanvien = {
