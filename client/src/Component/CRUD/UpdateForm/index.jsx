@@ -1,20 +1,8 @@
 import React, {useState} from "react";
 import axios from "axios";
 import './style.css';
-
-import TextField from '@mui/material/TextField';
-// import { Grid } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Button,TextField,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import Select from '@mui/material/Select';
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';
-// const updateDataForm2 = () => {
-//   console.log('done')
-// }
 
 function UpdateForm({data}) {
   const [id, setID] = useState(data.id);
@@ -53,7 +41,6 @@ function UpdateForm({data}) {
   }
   
   return (
-
     <div className='container center' >
       <form action="/" method="POST" onSubmit={(e) => { e.preventDefault(); alert('Submitted form!'); this.handleClose(); } }>
           <div className='textFieldItem'>
@@ -133,15 +120,12 @@ function UpdateForm({data}) {
                 setAddress(event.target.value);
               }}
             />
-                
           </div>
           <div className='textFieldItem'>
             <Button onClick={updateDataForm} variant="contained">Submit <AddCircleIcon/> </Button>
           </div>
-        
       </form>
     </div>
   );
 }
-
 export default UpdateForm;

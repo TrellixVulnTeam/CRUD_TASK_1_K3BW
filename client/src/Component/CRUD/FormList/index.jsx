@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import React, {useState} from "react";
-
 import axios from "axios";
-
-// import BtnAddForm from "./BtnAddForm";
 import DataFormList from "./DataFormList";
 import './style.css';
-
-import Table from '@mui/material/Table';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
-/**thu vien
- * buttom
- */
-
+import {Table, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
 import Stack from '@mui/material/Stack';
-// import { TableFooter } from "@mui/material";
-// import { jsx } from "@emotion/react";
-
 
 /**
  * function tra ve list table du lieu nhan vien
@@ -30,11 +12,6 @@ import Stack from '@mui/material/Stack';
 function FormList() {
     const [data, setData] = useState(null);
     useEffect(() => {
-    //   axios.get('http://localhost:3001/listdata')
-    //     .then(res => {
-    //         setData(res.data);
-    //     })
-    //     .catch(err => console.log(err));
         axios.get('http://localhost:3001/listdata')
         .then((res) => {
             setData(res.data);
@@ -44,15 +21,12 @@ function FormList() {
 
     return (
         <TableContainer component={Paper}>
-
             <Stack spacing={2} direction="row">
             </Stack>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" border="5px solid #000">
                 <TableHead>
                 <h1>FORM LIST</h1>
-
                     <TableRow>
-                        
                         <TableCell >ID</TableCell>
                         <TableCell align="right">Name</TableCell>
                         <TableCell align="right">Age</TableCell>
@@ -63,9 +37,7 @@ function FormList() {
                         <TableCell align="right">Action</TableCell>
                     </TableRow>
                 </TableHead>
-
                 <DataFormList rows={data}/>
-
             </Table>
         </TableContainer>
     );

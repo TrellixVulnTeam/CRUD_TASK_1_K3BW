@@ -5,6 +5,7 @@ async function getdata(req, res) {
     const data = await knex.from('nhanvien').select('*');
     return res.send(data);
 };
+
 async function create(req, res) {
     const data = req.body;
     const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
@@ -36,6 +37,7 @@ async function getDelete(req, res){
         res.json({ success: true, message: 'ok' });     // respond back to request
      })
 };
+
 async function postUpdate(req, res){
     let today = new Date(req.body.date);
     let date=today.getFullYear() + "-" + parseInt(today.getMonth()+1) + "-" + parseInt(today.getDate() - 1);
