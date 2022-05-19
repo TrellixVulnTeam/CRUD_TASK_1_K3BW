@@ -30,12 +30,18 @@ import Stack from '@mui/material/Stack';
 function FormList() {
     const [data, setData] = useState(null);
     useEffect(() => {
-      axios.get('http://localhost:3001/listdata')
+    //   axios.get('http://localhost:3001/listdata')
+    //     .then(res => {
+    //         setData(res.data);
+    //     })
+    //     .catch(err => console.log(err));
+        axios.get('http://localhost:3001/listdata')
         .then((res) => {
-          setData(res.data);
+            setData(res.data);
         })
-        .catch(err => console.log(err));
-    },[data]); ///////////////////////////////////////////////
+        .catch(err => console.log("aaaa"));
+    },[{data}]); ///////////////////////////////////////////////
+
     return (
         <TableContainer component={Paper}>
 

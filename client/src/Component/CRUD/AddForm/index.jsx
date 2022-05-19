@@ -115,7 +115,7 @@ function AddForm() {
               </div>
               <div className='textFieldItem'>
                 <TextField 
-                  fullWidth type="email" 
+                  fullWidth type="Email" 
                   InputLabelProps={{ shrink: true, required: true }} 
                   label="Email" 
                   id="fullWidth" 

@@ -34,14 +34,13 @@ function UpdateForm({data}) {
     address: address,
   }
   const updateDataForm = () =>{
-    console.log("dataForm", dataForm);
     axios({
       method: 'post',
       url: 'http://localhost:3001/update',
       data: dataForm
     })
     .then(function (response) {
-      
+      console.log(data);
       alert("insert success");
     })
     .catch(function (error) {

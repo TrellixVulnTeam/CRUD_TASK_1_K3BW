@@ -1,12 +1,14 @@
-// const express = require('express');
-// const routers = express.Router();
-console.log("a");
+const express = require('express')
+const routeNhanVien = require('./nhanvien')
+const routes = express.Router();
+// const routeNhanVien = require("../app/controllers/nhanvienController");
 
-const routeNhanvien = require('./nhanvien');
+routes.use('/',routeNhanVien);
+// router.get('/listdata',nhanvienController.aaa);
 
-function routers(app){
-    console.log("a");
-    // app.use('/', routeNhanvien)  
-}
 
-module.exports = routers;
+module.exports = routes;
+
+// const a = "aaaa"
+// console.log(a);
+// module.exports = a;

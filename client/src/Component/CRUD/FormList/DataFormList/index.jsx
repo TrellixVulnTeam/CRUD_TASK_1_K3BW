@@ -52,7 +52,7 @@ function DataFormList({rows},props) {
 
     const deleteRow = async (id) => {
         if (window.confirm("Are you sure you want to delete?")) {
-            axios.delete('http://localhost:3001/deleterow/'+ id)
+            axios.delete('http://localhost:3001/delete/'+ id)
                 .then(() => this.setState({ status: 'Delete successful' }));
           }
     };
