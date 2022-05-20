@@ -1,11 +1,10 @@
 import React , { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
-import FormUser from '../../formUsers';
+import UserForm from '../../formUsers';
 import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle} from '@mui/material';
- import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
- import BorderColorIcon from '@mui/icons-material/BorderColor';
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 
 
@@ -14,26 +13,36 @@ import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTit
 };
 
 /**
- * du lieu tung row table
+ * component DataUser dung de load data rows
+ * props.onClose dung de goi function onClose trong thang cha goi den no. 
+ * props.setload dung de goi function onClose trong thang cha goi den no. 
+ * props.rows truyen du lieu. 
  * @param {*} param0 
  * @returns 
  */
-function DataUser({rows},props) {
+function DataUser({onClose, setload, rows}) {
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
       setOpen(false);
     };
+    
+    /**
+     * function deleteRow chuyen huong den URL API delete.
+     * @param {*} id 
+     */
     const deleteRow = async (id) => {
         if (window.confirm("Are you sure you want to delete?")) {
             axios.delete('http://localhost:3001/delete/'+ id)
-                .then(() => this.setState({ status: 'Delete successful' }));
+            .then((res) => {
+                setload();
+            })
+            .catch(err => console.log("aaaa"));
           }
     };
     const [data, setData] = useState(null);
     const updateRow = async (row) => {
         setOpen(true);
         setData(row);
-
     };
     
     if(!rows) return;
@@ -72,10 +81,10 @@ function DataUser({rows},props) {
                     <DialogTitle id="alert-dialog-title">
                         {"Form Update Thong Tin Nhan Vien"}
                     </DialogTitle>
-                    <FormUser data={data}/>
+                    <UserForm onClose={handleClose} setload={setload} data={data}/>
 
                     <DialogActions>
-                        <Button onClick={handleClose}>Close</Button>
+                        <Button  onClick={handleClose}>Close</Button>
                     </DialogActions>
                 </Dialog>
             </div>

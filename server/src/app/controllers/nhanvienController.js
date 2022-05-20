@@ -1,5 +1,5 @@
 const knex = require('../../config/db/knexfile');
-const helper = require('../validate/helperReq');
+const helper = require('../validate/helperReqNhanVien');
 const db = require('../models/nhanvienModel');
 
 async function getdata(req, res) {
@@ -7,19 +7,21 @@ async function getdata(req, res) {
 };
 
 async function create(req, res) {
-    const data = req.body;
-    const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
-    const checknullinput = helper.checkNullInput(data)
-    const helperEmail = helper.helperEmail(data.email);
-    if(checknullinput == false || helperEmail == true || checkEmailExist){
-        try {
+    try {
+        const data = req.body;
+        if(data.sex == "") data.sex = "Male";
+        const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
+        const checknullinput = helper.checkNullInput(data)
+        const helperEmail = helper.helperEmail(data.email);
+        const email = helper.checkEmail(checkEmailExist , data.id);
+
+        if(checknullinput == false && helperEmail == true && email==true){
             await db.insertData(data);   
-        } catch (error) {
-            console.log('Error:controller insert', error);
-            return {status: 'error', message: 'Duplicate'};
-        }
+            return res.send("insert thanh cong")
+        }else return res.send("insert khoong thanh cong");
+    } catch (error) {
+        return res.send("insert khong thanh cong")
     }
-    return res.send("insert khoong thanh cong");
 
 };
 async function getDelete(req, res){
@@ -33,34 +35,35 @@ async function getDelete(req, res){
 };
 
 async function postUpdate(req, res){
-    let today = new Date(req.body.date);
-    let date=today.getFullYear() + "-" + parseInt(today.getMonth()+1) + "-" + parseInt(today.getDate() - 1);
-    const data = {
-        id: req.body.id,
-        name: req.body.name,
-        age: req.body.age,
-        sex: req.body.sex,
-        date: date,
-        email: req.body.email,
-        address: req.body.address,
-    }
-    const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
-    console.log(checkEmailExist.id);
-    const checknullinput = helper.checkNullInput(data)
-    const helperEmail = helper.helperEmail(data.email);
-    
-
-    if(checknullinput == false || helperEmail == true || checkEmailExist){
-        try {
-            await db.updateData(data);   
-        } catch (error) {
-            console.log('Error:controller update', error);
-            return {status: 'error', message: 'Duplicate'};
+    try {
+        let today = new Date(req.body.date);
+        let date=today.getFullYear() + "-" + parseInt(today.getMonth()+1) + "-" + parseInt(today.getDate() - 1);
+        const data = {
+            id: req.body.id,
+            name: req.body.name,
+            age: req.body.age,
+            sex: req.body.sex,
+            date: date,
+            email: req.body.email,
+            address: req.body.address,
         }
+        const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
+        const checknullinput = helper.checkNullInput(data)
+        const helperEmail = helper.helperEmail(data.email);
+        const email = helper.checkEmail(checkEmailExist , data.id);
+
+        if(checknullinput == false && helperEmail == true && email == true){
+            await db.updateData(data);   
+            return res.send("update thanh cong");
+        }else return res.send("update khoong thanh cong");
+    } catch (error) {
+        return res.send(error)
     }
-    return res.send("update khoong thanh cong");
  };
 
+/**
+ * controller xu li logic
+ */
 const nhanvien = {
     getdata: getdata,
     create: create,

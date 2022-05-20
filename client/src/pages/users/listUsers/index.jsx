@@ -12,22 +12,43 @@ import DataUser from "./dataUser";
  * @returns 
  */
 function ListUsers() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState('');
+    const [timeout, setTimeOut] = useState(true);
+
+    /**
+     * function onLoad de thay doi gia tri khi submit button de bat su thay doi du lieu useEffect load du lieu rows
+     */
+    const onLoad = () =>{
+        setTimeOut(false);
+    }
+    /**
+     * 
+     */
     useEffect(() => {
-        axios.get('http://localhost:3001/listdata')
-        .then((res) => {
-            setData(res.data);
-        })
-        .catch(err => console.log("aaaa"));
-    },[{data}]);
+        const loaddata = () =>{
+            axios.get('http://localhost:3001/listdata')
+            .then((res) => {
+                setTimeOut(true);
+                setData(res.data);
+            })
+            .catch(err => console.log("aaaa"));
+        };
+        loaddata();
+    },[timeout]);
     const [open, setOpen] = React.useState(false);
+
+    /**
+     * dung de off form
+     */
     const handleClose = () => {
-      setOpen(false);
+        setOpen(false);
     };
+
+    /**
+     * dung de on form
+     */
     const addform = () => {
         setOpen(true);
-        // setData(row);
-
     };
 
     return (
@@ -49,7 +70,7 @@ function ListUsers() {
                         <TableCell align="right">Action</TableCell>
                     </TableRow>
                 </TableHead>
-                <DataUser rows={data}/>
+                <DataUser onClose={handleClose} setload={onLoad} rows={data}/>
             </Table>
 
             <div>
@@ -62,7 +83,7 @@ function ListUsers() {
                      <DialogTitle id="alert-dialog-title">
                         {"Form Add Thong Tin Nhan Vien"}
                     </DialogTitle>
-                    <FormUser data={data}/>
+                    <FormUser onClose={handleClose} setload={onLoad}  data={data}/>
 
                     <DialogActions>
                         <Button onClick={handleClose}>Close</Button>
