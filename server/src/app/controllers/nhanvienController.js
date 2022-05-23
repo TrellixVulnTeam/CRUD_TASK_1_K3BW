@@ -3,7 +3,14 @@ const helper = require('../validate/helperReqNhanVien');
 const db = require('../models/nhanvienModel');
 
 async function getdata(req, res) {
-    return res.send(await db.getAll());
+    try {
+        const param = req.query.pages;
+        // console.log(await db.getAll(param));
+        return res.send(await db.getAll(param));
+    } catch (error) {
+        return res.send(error);
+    }
+    
 };
 
 async function create(req, res) {

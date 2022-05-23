@@ -1,37 +1,36 @@
 const knex = require('../../config/db/knexfile');
 
-async function getAll(){
-    const data =await knex.from('nhanvien').select('*');
-    return data;
+
+
+async function getAll(page){
+    const starsFrom = (page - 1) * 5;
+    const datalength =  await knex.from('nhanvien').select('*');
+    if((datalength.length % 5) != 0){
+        lengthrow = Math.floor(datalength.length/5 + 1);	
+    }else{
+        lengthrow = Math.floor(datalength.length/5);
+    }
+    return (data = {
+        datarow: await knex.from('nhanvien').select('*').limit('5').offset(starsFrom),
+        page: lengthrow,
+    });
 }
 
 async function insertData(req){
-    try {
-        await knex('nhanvien').insert(req);
-        return {status: 'success'};
-    } catch (error) {
-        console.log('Error: insertData', error);
-        return {status: 'error', message: 'Duplicate'};
-    }
+    return (await knex('nhanvien').insert(req));
 }
 
 async function deleteFindID(id){
-    knex('nhanvien')
+    return(await knex('nhanvien')
     .del()
     .where('id', id)
     .then( function (result) {
             // respond back to request
-     })
+     }))
 }
 
 async function updateData(req){
-    try {
-        await knex('nhanvien').update(req).where('id', req.id )
-        return {status: 'success'};
-    } catch (error) {
-        console.log('Error: updateData', error);
-        return {status: 'error', message: 'Duplicate'};
-    }
+    return(await knex('nhanvien').update(req).where('id', req.id ));
 }
 
 /**
