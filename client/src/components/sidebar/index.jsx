@@ -14,6 +14,10 @@ import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../../pages/dashboard/listItems';
 
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 
 const drawerWidth = 240;
 
@@ -68,8 +72,19 @@ function Sidebar() {
   );
   const logout = () =>{
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
     window.location.reload();
   }
+
+  //menu
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openmenu = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
         <>
             <AppBar position="absolute" open={open}>
@@ -99,11 +114,27 @@ function Sidebar() {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit" onClick={logout} > 
-              <Badge badgeContent={4} color="secondary">
+              <h5>Hello:{localStorage.getItem('email')}</h5>
+            <IconButton color="inherit" onClick={handleClick} > 
+              
+              <Badge color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={openmenu}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={logout}>Logout</MenuItem>
+            </Menu>
+
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

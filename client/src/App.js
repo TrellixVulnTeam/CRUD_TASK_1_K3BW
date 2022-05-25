@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import {  BrowserRouter , Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard';
 import ListUsers from './pages/users/listUsers';
-import Login from './pages/login/'
+import Login from './pages/auth/login'
+import Account from './pages/account/listaccount';
 import Box from '@mui/material/Box';
 import {createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Sidebar from '../src/components/sidebar';
 import Footer from '../src/components/footer';
+import Header from '../src/components/header' 
 
 const mdTheme = createTheme();
 
@@ -23,6 +25,8 @@ function App() {
   
 
   return (
+    <BrowserRouter>
+
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -44,19 +48,18 @@ function App() {
         >
           <Toolbar />
           
-            <BrowserRouter>
               <Routes>
                 <Route path='/' element={<Dashboard />} />
                 <Route path='/listusers' element={<ListUsers/>} />
-                <Route path='/Login' element={<Login/> } />
+                <Route path='/listaccount' element={<Account/> } />
               </Routes>
-            </BrowserRouter>
-            
 
             <Footer sx={{ pt: 4 }} />
         </Box>
       </Box>
     </ThemeProvider>
+    </BrowserRouter>
+
    
    
     
