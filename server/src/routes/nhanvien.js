@@ -7,7 +7,4 @@ router.post('/create',nhanvienController.create)
 router.delete('/delete/:id',nhanvienController.getDelete)
 router.post('/update',nhanvienController.postUpdate)
 
-
-
-
 module.exports = router;
