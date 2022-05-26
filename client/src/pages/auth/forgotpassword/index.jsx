@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import React, { useState } from 'react';
+import React from 'react';
 import {Avatar ,Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container, createTheme, ThemeProvider} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from "axios";
@@ -18,27 +18,29 @@ function Header(props) {
 }
 
 const theme = createTheme();
-function Login(props){
+function ForgotPassword(props){
   const navigate = useNavigate();
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
       const dataform =({
         email: data.get('email'),
-        password: data.get('password'),
       });
       axios({
         method: 'post',
-        url: 'http://localhost:3001/account/login',
+        url: 'http://localhost:3001/account/forgotpassword',
         data: dataform
       })
       .then(function (res) {
-        props.setToken(res.data[0].token);
-        localStorage.setItem('token',res.data[0].token);
-        localStorage.setItem('email',res.data[0].email);
-        navigate("/", { replace: true });
+          if(res.data){
+              console.log(res.data);
+            navigate("/setkey", { replace: true });
+          }else{
+            navigate("/login", { replace: true });
+          }
       })
       .catch(function (error) {
+        console.log("false");
       });
       
     }
@@ -60,7 +62,7 @@ function Login(props){
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Forgot Password
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -73,16 +75,6 @@ function Login(props){
               autoComplete="email"
               autoFocus
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -93,20 +85,8 @@ function Login(props){
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+             Submit
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link to="/forgotpassword" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Header sx={{ mt: 8, mb: 4 }} />
@@ -116,4 +96,4 @@ function Login(props){
   )
 }
 
-export default Login;
+export default ForgotPassword;

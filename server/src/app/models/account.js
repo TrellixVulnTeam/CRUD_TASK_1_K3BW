@@ -49,9 +49,22 @@ async function createToken(reqNV, reqPB){
     const str =  xoadau.toLowerCase() + "#" + reqNV.id + "#" + reqPB.tenphongban + "#FPTTelecom#DataCenter";
     return str;
 }
+async function getRandomInt(max) {
+    return Math.floor(Math.random() * max) + "FPT";
+  }
 async function checkemail(req){
-    // console.log('aaaa',await knex.from('account').select('*').where('email', req).first());
-    return (await knex.from('account').select('*').where('email', req).first());
+    checkmail = await knex.from('account').select('*').where('email', req).first();
+    key = await getRandomInt(1000000);
+    console.log(checkmail);
+    console.log(key);
+    console.log(checkmail.id);
+    console.log(await knex('account').update('key' , key).where('id', checkmail.id));
+    if(checkmail){
+        await knex('account').update('key' , key).where('id', checkmail.id);
+        return key;
+    }else {
+        throw new Error('khong thanh cong')
+    }
 }
 async function checklogin(data){
     // console.log(await knex.from('account').select('*').whereIn(['email', 'password'], [[data.email, data.password]]));
@@ -106,7 +119,24 @@ async function deleteFindID(id){
             // respond back to request
      }))
 }
+async function checkkey(req){
+    // console.log("aaaa");
 
+    // console.log(req);
+    const checkmail = await knex('account').select('*').where('key', req.key).first();
+
+
+    // console.log(await knex('account').update('key' , req).where('id', checkmail.id));
+    if(checkmail){
+        if(req.newpassword == req.renewpassword){
+            await knex('account').update('password' , req.newpassword).where('id', checkmail.id);
+        }
+        await knex('account').update('key' , "").where('id', checkmail.id); 
+        return checkmail;
+    }else {
+        throw new Error('khong thanh cong')
+    }
+}
 
 /**
  * xu li du lieu
@@ -117,6 +147,7 @@ const account = {
     getAll: getAll,
     insertData: insertData,
     deleteFindID : deleteFindID,
+    checkkey : checkkey,
 };
 
 module.exports = account;

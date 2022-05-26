@@ -55,8 +55,11 @@ function DataList({onClose, setload, rows, pagelength}){
                         </TableCell>
                     </TableRow>
                 ))}
-                
-                <TableFooter justify = "center" > <Paginate justify = "center" setload = {setload} pagelength = {pagelength}/></TableFooter>
+                <TableRow>
+                    <TableCell colSpan={8}>
+                        <Paginate  justify = "center" setload = {setload} pagelength = {pagelength}/>
+                    </TableCell>
+                </TableRow>
                
             </TableBody>
             <>

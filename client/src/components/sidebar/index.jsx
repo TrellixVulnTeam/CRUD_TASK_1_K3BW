@@ -12,11 +12,12 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../../pages/dashboard/listItems';
-
+// import { mainListItems, secondaryListItems } from '../../pages/dashboard/listItems';
+import ListItem from '../../pages/dashboard/listItems';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import {useNavigate} from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -70,10 +71,12 @@ function Sidebar() {
       },
     }),
   );
+  const navigate = useNavigate();
   const logout = () =>{
     localStorage.removeItem('token');
     localStorage.removeItem('email');
-    window.location.reload();
+    navigate("/login", { replace: true });
+    window.location.reload(); 
   }
 
   //menu
@@ -152,9 +155,9 @@ function Sidebar() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            <ListItem/>
+            {/* {mainListItems} */}
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
           </List>
         </Drawer>
         </>

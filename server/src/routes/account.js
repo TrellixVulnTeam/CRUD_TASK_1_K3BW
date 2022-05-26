@@ -6,6 +6,9 @@ router.post('/login',accountController.login);
 router.get('/listaccount',accountController.getall);
 router.post('/create',accountController.create);
 router.delete('/delete/:id',accountController.getDelete);
+router.post('/forgotpassword',accountController.forgotpassword);
+router.post('/setkey',accountController.setkey);
+
 
 
 

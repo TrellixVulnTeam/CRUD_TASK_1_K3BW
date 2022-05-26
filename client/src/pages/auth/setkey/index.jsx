@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import React, { useState } from 'react';
+
 import {Avatar ,Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container, createTheme, ThemeProvider} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from "axios";
@@ -18,34 +19,36 @@ function Header(props) {
 }
 
 const theme = createTheme();
-function Login(props){
+function SetKey(props){
   const navigate = useNavigate();
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
       const dataform =({
-        email: data.get('email'),
-        password: data.get('password'),
+        key: data.get('key'),
+        newpassword: data.get('newpassword'),
+        renewpassword: data.get('renewpassword'),
       });
       axios({
         method: 'post',
-        url: 'http://localhost:3001/account/login',
+        url: 'http://localhost:3001/account/setkey',
         data: dataform
       })
       .then(function (res) {
-        props.setToken(res.data[0].token);
-        localStorage.setItem('token',res.data[0].token);
-        localStorage.setItem('email',res.data[0].email);
-        navigate("/", { replace: true });
+        console.log(res)
+          if(res.data){
+            navigate("/login", { replace: true });
+          }else{
+            navigate("/setkey", { replace: true });
+          }
       })
       .catch(function (error) {
+        console.log("false");
       });
       
     }
   return (
-
-    
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -60,28 +63,40 @@ function Login(props){
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+                enter key
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="key"
+              label="key"
+              name="key"
+              autoComplete="key"
               autoFocus
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
+              id="newpassword"
+              label="nhap mat khau moi"
+              name="newpassword"
               autoComplete="current-password"
+              autoFocus
+              type="password"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="renewpassword"
+              label="nhap lai mat khau moi"
+              name="renewpassword"
+              autoComplete="current-password"
+              autoFocus
+              type="password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -93,20 +108,8 @@ function Login(props){
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+             Submit
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link to="/forgotpassword" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Header sx={{ mt: 8, mb: 4 }} />
@@ -116,4 +119,4 @@ function Login(props){
   )
 }
 
-export default Login;
+export default SetKey;

@@ -5,7 +5,6 @@ const db = require('../models/account');
 async function login(req, res) {
     try {
         const data = req.body;
-        console.log('bien:' ,data);
         if(db.checklogin(data)){
             return res.send(await db.checklogin(data));
         };
@@ -20,7 +19,6 @@ async function login(req, res) {
 async function getall(req, res) {
     try {
         const param = req.query.pages;
-        // console.log(await db.getAll(param));
         return res.send(await db.getAll(param));
     } catch (error) {
         return res.send(error);
@@ -39,7 +37,6 @@ async function create(req, res) {
 };
 
 async function getDelete(req, res){
-    // console.log("aaaa");
     try {
         await db.deleteFindID(req.params.id);
         return res.send("xoa thanh cong");
@@ -47,6 +44,24 @@ async function getDelete(req, res){
         console.log('Error:controller delete', error);
         return {status: 'error', message: 'Duplicate'};
     }
+};
+async function forgotpassword(req, res) {
+    try {
+        const data = req.body.email;
+        return res.send(await db.checkemail(data))
+    } catch (error) {
+        return res.send("");
+    }
+
+};
+async function setkey(req, res) {
+    try {
+        const data = req.body;
+        return res.send(await db.checkkey(data))
+    } catch (error) {
+        return res.send("");
+    }
+
 };
 
 /**
@@ -57,6 +72,8 @@ const account = {
     getall: getall,
     create: create,
     getDelete: getDelete,
+    forgotpassword: forgotpassword,
+    setkey: setkey,
 }
 
 module.exports = account;

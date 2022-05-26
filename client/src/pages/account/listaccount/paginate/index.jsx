@@ -13,7 +13,7 @@ function Paginate(props) {
     return (
         <div>
             <Stack spacing={2}>
-            <Pagination count={props.pagelength}  color="primary"  onChange={handleChange} />
+            <Pagination  style={{display:"flex", justifyContent: "center"}}  count={props.pagelength}  color="primary"  onChange={handleChange} />
             </Stack>
         </div>
     );

@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+
 import MuiAppBar from '@mui/material/AppBar';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Chart from '../../pages/dashboard/Chart';
 import Deposits from '../../pages/dashboard/Deposits';
 import Orders from '../../pages/dashboard/Orders';
-import Container from '@mui/material/Container';
+import { styled, Grid, Paper, Container } from '@mui/material';
 
 
 const drawerWidth = 240;

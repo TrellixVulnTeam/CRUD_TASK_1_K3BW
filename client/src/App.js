@@ -1,9 +1,10 @@
 import './App.css';
 import React, { useState } from 'react';
-import {  BrowserRouter , Routes, Route } from 'react-router-dom'
+import { Navigate, Redirect, Router, Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard';
 import ListUsers from './pages/users/listUsers';
 import Login from './pages/auth/login'
+import ForgotPassword from './pages/auth/forgotpassword'
 import Account from './pages/account/listaccount';
 import Box from '@mui/material/Box';
 import {createTheme, ThemeProvider } from '@mui/material/styles';
@@ -11,22 +12,28 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Sidebar from '../src/components/sidebar';
 import Footer from '../src/components/footer';
-import Header from '../src/components/header' 
-
+import Header from '../src/components/header'
+import SetKey from './pages/auth/setkey';
 const mdTheme = createTheme();
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
 
+
   if(!token) {
-    return <Login setToken = {setToken}/>
+    return (
+      <Routes>
+        <Route path='/login' element={<Login setToken = {setToken}/> } />
+        <Route path='/forgotpassword' element={<ForgotPassword setToken = {setToken}/> } />
+        <Route path='/setkey' element={<SetKey setToken = {setToken}/> } />
+      </Routes>
+      // <Login setToken = {setToken}/>
+    )
   }
-  console.log(token);
+  
   
 
   return (
-    <BrowserRouter>
-
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -47,20 +54,15 @@ function App() {
           }}
         >
           <Toolbar />
-          
               <Routes>
-                <Route path='/' element={<Dashboard />} />
+                <Route path='/' element={<Dashboard/>} />
                 <Route path='/listusers' element={<ListUsers/>} />
                 <Route path='/listaccount' element={<Account/> } />
               </Routes>
-
             <Footer sx={{ pt: 4 }} />
         </Box>
       </Box>
     </ThemeProvider>
-    </BrowserRouter>
-
-   
    
     
   );

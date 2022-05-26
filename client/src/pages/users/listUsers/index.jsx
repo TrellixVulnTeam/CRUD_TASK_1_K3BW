@@ -62,19 +62,22 @@ function ListUsers() {
         setOpen(true);
     };
     return (
-        <TableContainer component={Paper}>
-            <Stack spacing={2} direction="row">
-            <Button variant="contained" onClick={addform}>ADD  <AddCircleIcon/> </Button>
+        <TableContainer style={{padding:"25px"}}  component={Paper}>
+            <Stack style={{display:"flex", justifyContent: "right"}} spacing={2} direction="row">
+            <Button  variant="contained" onClick={addform}>ADD  <AddCircleIcon/> </Button>
             </Stack>
+            <center><h2>FORM-LIST</h2></center>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" border="5px solid #000">
+            
                 <TableHead>
-                    <h2>FORM LIST</h2>
+                   
+                    
                     <TableRow>
                         <TableCell >ID</TableCell>
                         <TableCell align="right">Name</TableCell>
                         <TableCell align="right">Age</TableCell>
                         <TableCell align="right">Sex</TableCell>
-                        <TableCell align="right">Date of birth</TableCell>
+                        <TableCell align="right">Date-of-birth</TableCell>
                         <TableCell align="right">Email</TableCell>
                         <TableCell align="right">Address</TableCell>
                         <TableCell align="right">Action</TableCell>

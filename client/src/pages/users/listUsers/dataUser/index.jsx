@@ -50,9 +50,9 @@ function DataUser({onClose, setload, rows, pagelength}) {
     
     return (
         <>
-            <TableBody  >
+            <TableBody >
                 {rows.map((row) => (
-                    <TableRow key={'0'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                    <TableRow  key={'0'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
                         {console.log(row)}
                         
                         <TableCell component="th" scope="row">{row.id}</TableCell>
@@ -67,10 +67,14 @@ function DataUser({onClose, setload, rows, pagelength}) {
                         </TableCell>
                     </TableRow>
                 ))}
-                
-                <TableFooter justify = "center" > <Paginate justify = "center" setload = {setload} pagelength = {pagelength}/></TableFooter>
-               
+                <TableRow>
+                    <TableCell colSpan={8}>
+                        <Paginate style={{display:"flex", justifyContent: "center"}} setload = {setload} pagelength = {pagelength}/>
+                    </TableCell>
+                </TableRow>
             </TableBody>
+            
+
             <>
                 <Dialog
                     open={open}
