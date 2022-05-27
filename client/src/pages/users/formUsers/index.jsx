@@ -55,7 +55,7 @@ function UserForm({onClose, setload, data }) {
       })
       .then(function (res) {
         alert(res.data);
-        // onClose();
+        onClose();
         setload();
       })
       .catch(function (error) {

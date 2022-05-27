@@ -6,7 +6,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
 function FormAccount({onClose, setload, data, dataNV, dataPB }){
-    const [idNV, setIDNV] = useState(data.idNV);
+  const [idNV, setIDNV] = useState(data.idNV);
   const [idPB, setIDPB] = useState(data.idPB);
   const dataForm = {
     idNV: idNV,

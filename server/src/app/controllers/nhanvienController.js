@@ -1,40 +1,36 @@
 const knex = require('../../config/db/knexfile');
 const helper = require('../validate/helperReqNhanVien');
 const db = require('../models/nhanvienModel');
+const Joi = require('joi');
 
 async function getdata(req, res) {
     try {
         const param = req.query.pages;
-        // console.log(await db.getAll(param));
         return res.send(await db.getAll(param));
     } catch (error) {
         return res.send(error);
     }
-    
 };
 
 async function create(req, res) {
     try {
         const data = req.body;
-        if(data.sex == "") data.sex = "Male";
         const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
-        const checknullinput = helper.checkNullInput(data)
         const helperEmail = helper.helperEmail(data.email);
         const email = helper.checkEmail(checkEmailExist , data.id);
-
-        if(checknullinput == false && helperEmail == true && email==true){
+        if(helperEmail == true && email==true){
             await db.insertData(data);   
             return res.send("insert thanh cong")
-        }else return res.send("insert khoong thanh cong");
+        }else return res.send("insert khong thanh cong! mail da ton tai")
     } catch (error) {
-        return res.send("insert khong thanh cong")
+        return res.send(error)
     }
-
 };
+
 async function getDelete(req, res){
     try {
-        await db.deleteFindID(req.params.id);
-        return res.send("them thanh cong");
+        
+        return res.send(await db.deleteFindID(req.params.id));
     } catch (error) {
         console.log('Error:controller delete', error);
         return {status: 'error', message: 'Duplicate'};
@@ -55,11 +51,9 @@ async function postUpdate(req, res){
             address: req.body.address,
         }
         const checkEmailExist =await knex.from('nhanvien').where('email', data.email).first();
-        const checknullinput = helper.checkNullInput(data)
         const helperEmail = helper.helperEmail(data.email);
         const email = helper.checkEmail(checkEmailExist , data.id);
-
-        if(checknullinput == false && helperEmail == true && email == true){
+        if(helperEmail == true && email == true){
             await db.updateData(data);   
             return res.send("update thanh cong");
         }else return res.send("update khoong thanh cong");

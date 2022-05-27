@@ -1,5 +1,6 @@
 const knex = require('../../config/db/knexfile');
-
+const joi = require('joi');
+const schemaValidate = require('../validate/helperReqNhanVien');
 
 
 async function getAll(page){
@@ -21,12 +22,18 @@ async function insertData(req){
 }
 
 async function deleteFindID(id){
-    return(await knex('nhanvien')
-    .del()
-    .where('id', id)
-    .then( function (result) {
-            // respond back to request
-     }))
+    const checkAccount = await knex('account').where('idNV', id).first();
+    console.log(checkAccount);
+    if(!checkAccount){
+        await knex('nhanvien')
+        .del()
+        .where('id', id)
+        .then( function (result) {
+                // respond back to request
+         })
+        return "delete thanh cong"
+    }else return "delete khoong thanh cong"
+    
 }
 
 async function updateData(req){

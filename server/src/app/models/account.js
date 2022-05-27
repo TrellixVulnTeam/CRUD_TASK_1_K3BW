@@ -25,6 +25,7 @@ async function loc_xoa_dau(str) {
      return str;
  }
  async function createEmailNV(req){
+
     const nameNV = (req.name).split(" ");
     let emailNV = nameNV[nameNV.length - 1];
     for(let i = 0; i < nameNV.length - 1; i++){
@@ -32,7 +33,6 @@ async function loc_xoa_dau(str) {
     }
     const xoadau =await loc_xoa_dau(emailNV);
     const str =  xoadau.toLowerCase() + req.id + "@gmail.com";
-    // console.log(await checkemail(str));
     if(await checkemail(str)){
         return false;
     }else{
@@ -47,27 +47,26 @@ async function createToken(reqNV, reqPB){
     }
     const xoadau =await loc_xoa_dau(emailNV);
     const str =  xoadau.toLowerCase() + "#" + reqNV.id + "#" + reqPB.tenphongban + "#FPTTelecom#DataCenter";
+    console.log("token", str);
     return str;
 }
 async function getRandomInt(max) {
     return Math.floor(Math.random() * max) + "FPT";
   }
 async function checkemail(req){
+    console.log("checkemail", req);
+
     checkmail = await knex.from('account').select('*').where('email', req).first();
     key = await getRandomInt(1000000);
-    console.log(checkmail);
-    console.log(key);
-    console.log(checkmail.id);
-    console.log(await knex('account').update('key' , key).where('id', checkmail.id));
     if(checkmail){
-        await knex('account').update('key' , key).where('id', checkmail.id);
+    await knex('account').update('key' , key).where('id', checkmail.id);
         return key;
     }else {
+        return "";
         throw new Error('khong thanh cong')
     }
 }
 async function checklogin(data){
-    // console.log(await knex.from('account').select('*').whereIn(['email', 'password'], [[data.email, data.password]]));
     return (await knex.from('account').select('*').whereIn(['email', 'password'], [[data.email, data.password]]));
 }
 async function getAll(page){
@@ -79,7 +78,6 @@ async function getAll(page){
         lengthrow = Math.floor(datalength.length/5);
     }
     return (data = {
-        // datarow: await knex.from('account').select('*').limit('5').offset(starsFrom),
         datarow: await knex.select('*','account.id','account.email').from('account')
                 .leftJoin('nhanvien', 'account.idNV', 'nhanvien.id')
                 .leftJoin('phongban', 'account.idPB', 'phongban.id')
@@ -91,6 +89,7 @@ async function getAll(page){
     });
 }
 async function insertData(req){
+    console.log("insertData 1" ,req.idNV);
 
     const nhanvien = await knex('nhanvien').select('*').where('id', req.idNV).first();
     const  phongban = await knex('phongban').select('*').where('id', req.idPB).first();
@@ -120,13 +119,7 @@ async function deleteFindID(id){
      }))
 }
 async function checkkey(req){
-    // console.log("aaaa");
-
-    // console.log(req);
     const checkmail = await knex('account').select('*').where('key', req.key).first();
-
-
-    // console.log(await knex('account').update('key' , req).where('id', checkmail.id));
     if(checkmail){
         if(req.newpassword == req.renewpassword){
             await knex('account').update('password' , req.newpassword).where('id', checkmail.id);

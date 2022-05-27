@@ -7,9 +7,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Paginate from '../paginate'
 
-
-
-
  DataUser.propTypes = {
     rows: PropTypes.array,
 };
@@ -36,6 +33,7 @@ function DataUser({onClose, setload, rows, pagelength}) {
         if (window.confirm("Are you sure you want to delete?")) {
             axios.delete('http://localhost:3001/delete/'+ id)
             .then((res) => {
+                alert(res.data)
                 setload();
             })
             .catch(err => console.log("aaaa"));
