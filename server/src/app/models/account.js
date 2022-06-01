@@ -24,7 +24,7 @@ async function loc_xoa_dau(str) {
      str = str.replace(/Đ/g, "D");
      return str;
  }
- async function createEmailNV(req){
+async function createEmailNV(req){
 
     const nameNV = (req.name).split(" ");
     let emailNV = nameNV[nameNV.length - 1];
@@ -70,20 +70,15 @@ async function checklogin(data){
     return (await knex.from('account').select('*').whereIn(['email', 'password'], [[data.email, data.password]]));
 }
 async function getAll(page){
-    const starsFrom = (page - 1) * 5;
+    // const starsFrom = (page - 1) * 5;
     const datalength =  await knex.from('account').select('*');
-    if((datalength.length % 5) != 0){
-        lengthrow = Math.floor(datalength.length/5 + 1);	
-    }else{
-        lengthrow = Math.floor(datalength.length/5);
-    }
     return (data = {
         datarow: await knex.select('*','account.id','account.email').from('account')
                 .leftJoin('nhanvien', 'account.idNV', 'nhanvien.id')
                 .leftJoin('phongban', 'account.idPB', 'phongban.id')
-                .limit('5').offset(starsFrom)
+                .limit('5').offset((page - 1) * 5)
                 ,
-        page: lengthrow,
+        page: datalength.length % 5 != 0 ? Math.floor(datalength.length/5 + 1) : Math.floor(datalength.length/5),
         dataNV:  await knex.select('*').from('nhanvien'),
         dataPB:  await knex.select('*').from('phongban'),
     });

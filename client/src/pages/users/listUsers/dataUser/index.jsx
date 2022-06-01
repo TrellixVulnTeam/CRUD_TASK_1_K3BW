@@ -6,6 +6,9 @@ import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTit
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Paginate from '../paginate'
+import {useDispatch, useSelector} from 'react-redux';
+import actionsNhanVien from '../../../../actions/nhavienAction';
+import nhanvienredux from '../../../../reducers/nhanvienredux';
 
  DataUser.propTypes = {
     rows: PropTypes.array,
@@ -20,9 +23,10 @@ import Paginate from '../paginate'
  * @returns 
  */
 function DataUser({onClose, setload, rows, pagelength}) {
-    const [open, setOpen] = React.useState(false);
+    const userState = useSelector(state => state.nhanvien);
+    const dispatch = useDispatch();
     const handleClose = () => {
-      setOpen(false);
+        dispatch(actionsNhanVien.setOpen(false));
     };
     
     /**
@@ -39,17 +43,15 @@ function DataUser({onClose, setload, rows, pagelength}) {
             .catch(err => console.log("aaaa"));
           }
     };
-    const [data, setData] = useState(null);
     const updateRow = async (row) => {
-        setOpen(true);
-        setData(row);
+        dispatch(actionsNhanVien.setOpen(true))
+        dispatch(actionsNhanVien.setDataFormUpdate(row));
     };
-    const rowsdata = rows;
     
     return (
         <>
             <TableBody >
-                {rows.map((row) => (
+                {userState.data.map((row) => (
                     <TableRow  key={'0'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
                         {console.log(row)}
                         
@@ -67,7 +69,7 @@ function DataUser({onClose, setload, rows, pagelength}) {
                 ))}
                 <TableRow>
                     <TableCell colSpan={8}>
-                        <Paginate style={{display:"flex", justifyContent: "center"}} setload = {setload} pagelength = {pagelength}/>
+                        <Paginate style={{display:"flex", justifyContent: "center"}} setload = {setload} pagelength = {userState.pagelength}/>
                     </TableCell>
                 </TableRow>
             </TableBody>
@@ -75,7 +77,7 @@ function DataUser({onClose, setload, rows, pagelength}) {
 
             <>
                 <Dialog
-                    open={open}
+                    open={userState.open}
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -83,7 +85,7 @@ function DataUser({onClose, setload, rows, pagelength}) {
                     <DialogTitle id="alert-dialog-title">
                         {"Form Update Thong Tin Nhan Vien"}
                     </DialogTitle>
-                    <UserForm onClose={handleClose} setload={setload} data={data}/>
+                    <UserForm onClose={handleClose} setload={setload} data={userState.dataformupdate}/>
 
                     <DialogActions>
                         <Button  onClick={handleClose}>Close</Button>

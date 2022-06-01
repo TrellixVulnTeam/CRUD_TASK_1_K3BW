@@ -18,7 +18,7 @@ const mdTheme = createTheme();
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
-
+  console.log(window.location.href);
 
   if(!token) {
     return (

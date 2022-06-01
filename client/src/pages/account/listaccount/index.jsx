@@ -6,15 +6,14 @@ import {Table, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Di
 import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DataList from './datalist';
+import {useDispatch, useSelector} from 'react-redux';
+// import accountredux from "../../../reducers/accountredux";
+import accountAction from '../../../actions/accountAction'
+import actionsNhanVien from "../../../actions/nhavienAction";
 
 function ListAccount(){
-    const [data, setData] = useState([]);
-    const [timeout, setTimeOut] = useState(true);
-    const [page , setPage] = useState(1);
-    const [pagelength , setPageLength] = useState('')
-    const [dataNV, setDataNV] = useState('');
-    const [dataPB, setDataPB] = useState('');
-
+    const stateAccount = useSelector(state => state.account);
+    const dispatch = useDispatch();
     /**
      * function onLoad de thay doi gia tri khi submit button de bat su thay doi du lieu useEffect load du lieu rows
      */
@@ -24,41 +23,43 @@ function ListAccount(){
      */
     const onLoad = (pages) =>{
         if(pages){
-            setPage(pages);
+            dispatch(accountAction.setPage(pages));
         }
-        if(timeout === true) setTimeOut(false);
-        else setTimeOut(true);
+        if(stateAccount.timeout === true) dispatch(accountAction.setTimeOut(false));
+        else dispatch(accountAction.setTimeOut(true));
         // console.log('pages: ' , {pages});
     }
     useEffect(() => {
 
         axios.get('http://localhost:3001/account/listaccount',{
             params: {
-                pages: page
+                pages: stateAccount.page
             }
         })
         .then((res) => {
-            setData(res.data.datarow);
-            setDataNV(res.data.dataNV);
-            setDataPB(res.data.dataPB);
-            setPageLength(res.data.page)
+            dispatch(accountAction.setData(res.data.datarow))
+            dispatch(accountAction.setDataNV(res.data.dataNV))
+            dispatch(accountAction.setDataPB(res.data.dataPB))
+            dispatch(accountAction.setPageLoad(res.data.page))
         })
         .catch(err => console.log("aaaa"));
-    },[timeout]);
+    },[stateAccount.timeout]);
     const [open, setOpen] = React.useState(false);
-    
+    console.log('timeout: ' , stateAccount.timeout);
     /**
      * dung de off form
      */
     const handleClose = () => {
-        setOpen(false);
+        dispatch(accountAction.setOpen(false))
+        // setOpen(false);
     };
 
     /**
      * dung de on form
      */
     const addform = () => {
-        setOpen(true);
+        dispatch(accountAction.setOpen(true));
+        // setOpen(true);
     };
     return(
         <TableContainer style={{padding:"25px"}} component={Paper}>
@@ -78,12 +79,12 @@ function ListAccount(){
                         <TableCell align="right">Action</TableCell>
                     </TableRow>
                 </TableHead>
-                <DataList onClose={handleClose} setload={onLoad} rows={data} pagelength = {pagelength}/>
+                <DataList onClose={handleClose} setload={onLoad} rows={stateAccount.data} pagelength = {stateAccount.pagelength}/>
             </Table>
 
             <>
                 <Dialog
-                    open={open}
+                    open={stateAccount.open}
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -91,7 +92,7 @@ function ListAccount(){
                     <DialogTitle id="alert-dialog-title">
                         {"Form Add Thong Tin Nhan Vien"}
                     </DialogTitle>
-                    <FormAccount onClose={handleClose} setload={onLoad}  data={data} dataNV = {dataNV} dataPB = {dataPB}/>
+                    <FormAccount onClose={handleClose} setload={onLoad}  data={stateAccount.data} dataNV = {stateAccount.dataNV} dataPB = {stateAccount.dataPB}/>
 
                     <DialogActions>
                         <Button onClick={handleClose}>Close</Button>

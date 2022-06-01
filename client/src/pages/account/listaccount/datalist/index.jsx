@@ -6,16 +6,19 @@ import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTit
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Paginate from '../paginate'
+import {useDispatch, useSelector} from 'react-redux';
+import accountAction from '../../../../actions/accountAction';
 
 
-DataList.propTypes = {
-    rows: PropTypes.array,
-};
 
-function DataList({onClose, setload, rows, pagelength}){
-    const [open, setOpen] = React.useState(false);
+
+function DataList({onClose, setload}){
+    const stateaccount = useSelector(state => state.account);
+    const dispatch = useDispatch();
+    // const [open, setOpen] = React.useState(false);
     const handleClose = () => {
-      setOpen(false);
+        dispatch(accountAction.setOpen(false));
+    //   setOpen(false);
     };
     
     /**
@@ -31,17 +34,14 @@ function DataList({onClose, setload, rows, pagelength}){
             .catch(err => console.log("aaaa"));
           }
     };
-    const [data, setData] = useState(null);
     const updateRow = async (row) => {
-        setOpen(true);
-        setData(row);
+        dispatch(accountAction.setOpen(true));
+        dispatch(accountAction.setDataFormUpdate(row));
     };
-    console.log(rows);
-    const rowsdata = rows;
     return(
         <>
             <TableBody  >
-                {rows.map((row) => (
+                {stateaccount.data.map((row) => (
                     <TableRow key={'0'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
                         {console.log(row)}
                         
@@ -57,14 +57,14 @@ function DataList({onClose, setload, rows, pagelength}){
                 ))}
                 <TableRow>
                     <TableCell colSpan={8}>
-                        <Paginate  justify = "center" setload = {setload} pagelength = {pagelength}/>
+                        <Paginate  justify = "center" setload = {setload} pagelength = {stateaccount.pagelength}/>
                     </TableCell>
                 </TableRow>
                
             </TableBody>
             <>
                 <Dialog
-                    open={open}
+                    open={stateaccount.open}
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -72,7 +72,7 @@ function DataList({onClose, setload, rows, pagelength}){
                     <DialogTitle id="alert-dialog-title">
                         {"Form Update Thong Tin Nhan Vien"}
                     </DialogTitle>
-                    <FormAccount onClose={handleClose} setload={setload} data={data}/>
+                    <FormAccount onClose={handleClose} setload={setload} data={stateaccount.dataformupdate}/>
 
                     <DialogActions>
                         <Button  onClick={handleClose}>Close</Button>

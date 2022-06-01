@@ -3,13 +3,17 @@ import axios from "axios";
 import './style.css';
 import { Button,TextField,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-
+import {useSelector, useDispatch} from 'react-redux'
+import actionsNhanVien from "../../../actions/nhavienAction";
 /**
  * component UserForm dung de goi form update vaf create.
  * @param {*} param0 
  * @returns 
  */
-function UserForm({onClose, setload, data }) {
+function UserForm({onClose, setload}) {
+  const userState = useSelector(state => state.nhanvien);
+  const dispatch = useDispatch();
+  const data = userState.dataformupdate;
   const [id, setID] = useState(data.id);
   const [name, setName] = useState(data.name);
   const [age, setAge] = useState(data.age);
@@ -40,7 +44,6 @@ function UserForm({onClose, setload, data }) {
         data: dataForm
       })
       .then(function (res) {
-        alert(res.data);
         setload();
         onClose();
       })
@@ -54,12 +57,10 @@ function UserForm({onClose, setload, data }) {
         data: dataForm
       })
       .then(function (res) {
-        alert(res.data);
         onClose();
         setload();
       })
       .catch(function (error) {
-        alert("bbbbb");
         console.log(error);
         onClose();
       });

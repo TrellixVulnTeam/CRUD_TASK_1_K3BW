@@ -6,17 +6,16 @@ import {Table, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Di
 import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DataUser from "./dataUser";
+import {useSelector, useDispatch} from 'react-redux'
+import actionsNhanVien from "../../../actions/nhavienAction";
 
 /**
  * function tra ve list table du lieu nhan vien
  * @returns 
  */
 function ListUsers() {
-    const [data, setData] = useState([]);
-    const [timeout, setTimeOut] = useState(true);
-    const [page , setPage] = useState(1);
-    const [pagelength , setPageLength] = useState('')
-
+    const userState = useSelector(state => state.nhanvien);
+    const dispatch = useDispatch();
     /**
      * function onLoad de thay doi gia tri khi submit button de bat su thay doi du lieu useEffect load du lieu rows
      */
@@ -26,40 +25,40 @@ function ListUsers() {
      */
     const onLoad = (pages) =>{
         if(pages){
-            setPage(pages);
+            dispatch(actionsNhanVien.setPage(pages))
         }
-        if(timeout === true) setTimeOut(false);
-        else setTimeOut(true);
-        // console.log('pages: ' , {pages});
+        if(userState.timeout === true) dispatch(actionsNhanVien.setTimeout(false));
+        else dispatch(actionsNhanVien.setTimeout(true));
     }
     useEffect(() => {
-
         axios.get('http://localhost:3001/listdata/',{
             params: {
-                pages: page
+                pages: userState.page
             }
         })
         .then((res) => {
-            // console.log(res.data.datarow);
-            setData(res.data.datarow);
-            setPageLength(res.data.page)
+           // console.log(actionsNhanVien.getList(res.data.datarow));
+           dispatch(actionsNhanVien.setPageLength(res.data.page));
+           dispatch(actionsNhanVien.getList(res.data.datarow));
+            // setData(res.data.datarow);
+            // setPageLength(res.data.page)
         })
         .catch(err => console.log("aaaa"));
-    },[timeout]);
-    const [open, setOpen] = React.useState(false);
-    
+    },[userState.timeout]);
     /**
      * dung de off form
      */
     const handleClose = () => {
-        setOpen(false);
+        dispatch(actionsNhanVien.setOpen(false));
+        // setOpen(false);
     };
 
     /**
      * dung de on form
      */
     const addform = () => {
-        setOpen(true);
+        dispatch(actionsNhanVien.setOpen(true));
+        // setOpen(true);
     };
     return (
         <TableContainer style={{padding:"25px"}}  component={Paper}>
@@ -83,12 +82,12 @@ function ListUsers() {
                         <TableCell align="right">Action</TableCell>
                     </TableRow>
                 </TableHead>
-                <DataUser onClose={handleClose} setload={onLoad} rows={data} pagelength = {pagelength}/>
+                <DataUser onClose={handleClose} setload={onLoad} rows={userState.data} pagelength = {userState.pagelength}/>
             </Table>
 
             <>
                 <Dialog
-                    open={open}
+                    open={userState.open}
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -96,7 +95,7 @@ function ListUsers() {
                      <DialogTitle id="alert-dialog-title">
                         {"Form Add Thong Tin Nhan Vien"}
                     </DialogTitle>
-                    <FormUser onClose={handleClose} setload={onLoad}  data={data}/>
+                    <FormUser onClose={handleClose} setload={onLoad}  data={userState.data}/>
 
                     <DialogActions>
                         <Button onClick={handleClose}>Close</Button>

@@ -6,6 +6,7 @@ import { getScopedCssBaselineUtilityClass } from '@mui/material';
 
 
 function Paginate(props) {
+    console.log('lang' ,props.pagelength);
     const handleChange = (event, value) => {
         props.setload(value);
     };
