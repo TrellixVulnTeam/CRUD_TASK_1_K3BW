@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import { Navigate, Redirect, Router, Routes, Route } from 'react-router-dom'
+import { Navigate, Router, Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard';
 import ListUsers from './pages/users/listUsers';
 import Login from './pages/auth/login'
@@ -10,10 +10,10 @@ import Box from '@mui/material/Box';
 import {createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
-import Sidebar from '../src/components/sidebar';
-import Footer from '../src/components/footer';
-import Header from '../src/components/header'
-import SetKey from './pages/auth/setkey';
+import Sidebar from 'components/sidebar';
+import Footer from 'components/footer';
+import Header from 'components/header'
+import SetKey from 'pages/auth/setkey';
 const mdTheme = createTheme();
 
 function App() {

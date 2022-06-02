@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import MuiAppBar from '@mui/material/AppBar';
-import Chart from '../../pages/dashboard/Chart';
-import Deposits from '../../pages/dashboard/Deposits';
-import Orders from '../../pages/dashboard/Orders';
+import Chart from 'pages/dashboard/Chart';
+import Deposits from 'pages/dashboard/Deposits';
+import Orders from 'pages/dashboard/Orders';
 import { styled, Grid, Paper, Container } from '@mui/material';
 
 
