@@ -4,7 +4,9 @@ import './style.css';
 import { Button,TextField,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {useSelector, useDispatch} from 'react-redux'
-import actionsNhanVien from "../../../actions/nhavienAction";
+import actionsNhanVien from "../../../reducers/actions/nhavienAction";
+import validateFrom from "../../../validateForm/nhanvienValidate";
+import { color } from "@mui/system";
 /**
  * component UserForm dung de goi form update vaf create.
  * @param {*} param0 
@@ -30,6 +32,8 @@ function UserForm({onClose, setload}) {
     email: email,
     address: address,
   }
+  const formik = validateFrom();
+  console.log('data' ,formik.values)
   //kiem tra sex cos ton tai khong. neu khong gan gia trij mat dinh cho no la Male
   if(!dataForm.sex){setSex("Male")};
 
@@ -51,19 +55,22 @@ function UserForm({onClose, setload}) {
         onClose();
       });
     }else{
-      axios({
-        method: 'post',
-        url: 'http://localhost:3001/create',
-        data: dataForm
-      })
-      .then(function (res) {
-        onClose();
-        setload();
-      })
-      .catch(function (error) {
-        console.log(error);
-        onClose();
-      });
+      if(!formik.errors.name && !formik.errors.age && !formik.errors.sex && !formik.errors.address && !formik.errors.date && !formik.errors.email){
+        axios({
+          method: 'post',
+          url: 'http://localhost:3001/create',
+          data: dataForm
+        })
+        .then(function (res) {
+          onClose();
+          setload();
+        })
+        .catch(function (error) {
+          console.log(error);
+          onClose();
+        });
+      }
+      else{alert("ban khong the tao tai khoan khi khong dung format")}
     }
       
   };
@@ -78,23 +85,33 @@ function UserForm({onClose, setload}) {
               <TextField 
                 fullWidth InputLabelProps={{ shrink: true, required: true }} 
                 label="Name" 
+                name = "name"
                 id="fullWidth" 
-                defaultValue={data.name}
-                onChange={(event) => {
-                  setName(event.target.value);
-                }}
+                defaultValue={formik.values.name}
+                onChange={formik.handleChange}
+                // onChange={(event) => {
+                //   formik.handleChange();
+                //   // setName(event.target.value);
+                // }}
               />
+              {formik.errors.name &&  (
+            <p style={{color : "red", margin : "0px",float: "left"}} >{formik.errors.name}</p>
+          )}
             </div>
             <div className='textFieldItem'>
               <TextField 
                 fullWidth InputLabelProps={{ shrink: true, required: true }} 
                 label="Age" 
+                name = "age"
                 id="fullWidth" 
-                defaultValue={data.age}
-                onChange={(event) => {
-                  setAge(event.target.value);
-                }}
+                defaultValue={formik.values.age}
+                onChange={formik.handleChange}
+
+                // onChange={(event) => {
+                //   setAge(event.target.value);
+                // }}
               />
+              {formik.errors.age &&  ( <p style={{color : "red", margin : "0px",float: "left"}} >{formik.errors.age}</p>)}
             </div>
             <div className='textFieldItem'>
               <Box sx={{ minWidth: 120 }}>
@@ -104,18 +121,17 @@ function UserForm({onClose, setload}) {
                   </InputLabel>
                   <NativeSelect
                     inputProps={{
-                      name: 'Sex',
+                      name: 'sex',
                       id: 'uncontrolled-native',
                     }}
-                    onChange={(event) => {
-                      setSex(event.target.value);
-                    }}
+                    onChange={formik.handleChange}
                   >
                     <option defaultValue={(!data.sex)?("Male"):((data.sex)==="Male"?("Male"):("Female"))}>{(!data.sex)?("Male"):((data.sex)==="Male"?("Male"):("Female"))}</option>
                     <option defaultValue={(!data.sex)?("Female"):((data.sex)!=="Female"?("Female"):("Male"))}>{(!data.sex)?("Female"):((data.sex)!=="Female"?("Female"):("Male"))}</option>
                   </NativeSelect>
                 </FormControl>
               </Box>
+              
             </div>
             <div className='textFieldItem'>
               <TextField 
@@ -123,34 +139,32 @@ function UserForm({onClose, setload}) {
                 label="Date" 
                 id="fullWidth" 
                 type="date"
-                onChange={(event) => {
-                  setDate(event.target.value);
-                }}
+                name = "date"
+                onChange={formik.handleChange}
               />
+              {formik.errors.date &&  ( <p style={{color : "red", margin : "0px",float: "left"}} >{formik.errors.date}</p>)}
             </div>
             <div className='textFieldItem'>
               <TextField 
                 fullWidth InputLabelProps={{ shrink: true, required: true }} 
                 label="Email" 
-                id="fullWidth" 
-                defaultValue={data.email}
-
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
+                id="fullWidth"
+                name = "email" 
+                defaultValue={formik.values.email}
+                onChange={formik.handleChange}
               />
+              {formik.errors.email &&  ( <p style={{color : "red", margin : "0px",float: "left"}} >{formik.errors.email}</p>)}
             </div>
             <div className='textFieldItem'>
               <TextField 
                 fullWidth InputLabelProps={{ shrink: true, required: true }} 
                 label="Address" 
                 id="fullWidth" 
-                defaultValue={data.address}
-
-                onChange={(event) => {
-                  setAddress(event.target.value);
-                }}
+                name = "address"
+                defaultValue={formik.values.address}
+                onChange={formik.handleChange}
               />
+              {formik.errors.address &&  ( <p style={{color : "red", margin : "0px",float: "left"}} >{formik.errors.address}</p>)}
             </div>
             <div className='textFieldItem'>
               <Button onClick={formusers} variant="contained">Submit <AddCircleIcon/> </Button>

@@ -7,7 +7,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Paginate from '../paginate'
 import {useDispatch, useSelector} from 'react-redux';
-import accountAction from '../../../../actions/accountAction';
+import accountAction from '../../../../reducers/actions/accountAction';
 
 
 

@@ -8,8 +8,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DataList from './datalist';
 import {useDispatch, useSelector} from 'react-redux';
 // import accountredux from "../../../reducers/accountredux";
-import accountAction from '../../../actions/accountAction'
-import actionsNhanVien from "../../../actions/nhavienAction";
+import accountAction from '../../../reducers/actions/accountAction'
+import actionsNhanVien from "../../../reducers/actions/nhavienAction";
 
 function ListAccount(){
     const stateAccount = useSelector(state => state.account);

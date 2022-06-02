@@ -3,9 +3,13 @@ import axios from "axios";
 import './style.css';
 import { Button,TextField,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import {useDispatch, useSelector} from 'react-redux';
+import accountAction from '../../../reducers/actions/accountAction';
 
+function FormAccount({onClose, setload}){
 
-function FormAccount({onClose, setload, data, dataNV, dataPB }){
+  const stateaccount = useSelector(state => state.account);
+  const data = stateaccount.dataformupdate;
   const [idNV, setIDNV] = useState(data.idNV);
   const [idPB, setIDPB] = useState(data.idPB);
   const dataForm = {
@@ -17,7 +21,6 @@ function FormAccount({onClose, setload, data, dataNV, dataPB }){
    * formusers de goi api cua create va update, neu form co id sex run URL APi update, nguoc lai thi sex run URL API create.
    */
   const formusers = () =>{
-        console.log(dataForm);
         if(dataForm.idNV && dataForm.idPB){
             axios({
                 method: 'post',
@@ -33,40 +36,10 @@ function FormAccount({onClose, setload, data, dataNV, dataPB }){
                 onClose();
             });
         }else console.log("false");
-    // if(data.id){
-    //   axios({
-    //     method: 'post',
-    //     url: 'http://localhost:3001/update',
-    //     data: dataForm
-    //   })
-    //   .then(function (res) {
-    //     alert(res.data);
-    //     setload();
-    //     onClose();
-    //   })
-    //   .catch(function (error) {
-    //     onClose();
-    //   });
-    // }else{
-    //   axios({
-    //     method: 'post',
-    //     url: 'http://localhost:3001/create',
-    //     data: dataForm
-    //   })
-    //   .then(function (res) {
-    //     alert(res.data);
-    //     onClose();
-    //     setload();
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //     onClose();
-    //   });
-    // }
       
   };
   
-  if(!data) return;
+  // if(!data) return;
     return(
         <div>
         <div className='container center' >
@@ -88,7 +61,7 @@ function FormAccount({onClose, setload, data, dataNV, dataPB }){
                       }}
                     >
                         <option value= ""></option>
-                        {dataNV.map((optionNV) => (
+                        {stateaccount.dataNV.map((optionNV) => (
                             <option value = {optionNV.id}>{optionNV.id} - {optionNV.name}</option>
                         ))}
                     </NativeSelect>
@@ -112,7 +85,7 @@ function FormAccount({onClose, setload, data, dataNV, dataPB }){
                       }}
                     >
                         <option value = ""></option>
-                        {dataPB.map((optionPB) => (
+                        {stateaccount.dataPB.map((optionPB) => (
                             <option value = {optionPB.id}>{optionPB.id} - {optionPB.tenphongban}</option>
                         ))}
                     </NativeSelect>

@@ -7,7 +7,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Paginate from '../paginate'
 import {useDispatch, useSelector} from 'react-redux';
-import actionsNhanVien from '../../../../actions/nhavienAction';
+import actionsNhanVien from '../../../../reducers/actions/nhavienAction';
 import nhanvienredux from '../../../../reducers/nhanvienredux';
 
  DataUser.propTypes = {

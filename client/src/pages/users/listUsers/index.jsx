@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DataUser from "./dataUser";
 import {useSelector, useDispatch} from 'react-redux'
-import actionsNhanVien from "../../../actions/nhavienAction";
+import actionsNhanVien from "../../../reducers/actions/nhavienAction";
 
 /**
  * function tra ve list table du lieu nhan vien
