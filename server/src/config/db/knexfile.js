@@ -7,7 +7,7 @@ const option  = {
       port : 3306,
       database: 'CRUD-Task1',
       user:     'root',
-      password: 'Password123#@!'
+      password: 'Password123#@!',
     },
     pool: {
       min: 2,
