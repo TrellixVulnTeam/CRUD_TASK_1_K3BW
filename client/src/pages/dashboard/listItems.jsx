@@ -1,4 +1,5 @@
 import {  Link } from 'react-router-dom'
+import { useMemo } from "react";
 import * as React from 'react';
 import {ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
@@ -8,17 +9,21 @@ import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
+import actionsMenu from 'reducers/actions/menu';
 function ListItem(){
   const userState = useSelector(state => state.sibar);
+  const userStatemenu = useSelector(state => state.menu);
 	const dispatch = useDispatch();
 
-  
-    const [open, setOpen] = React.useState(false);
-    const [openlevel, setOpenLevel] = React.useState('');
-    const [openid, setOpenID] = React.useState('');
-    const [idlevel, setIDLevel] = React.useState('');
-  
+  const [open, setOpen] = React.useState(false);
+  const [openlevel, setOpenLevel] = React.useState('');
+  const [openid, setOpenID] = React.useState('');
+  const [idlevel, setIDLevel] = React.useState('');
+    // const styleBC= (id) =>{
+    //   document.getElementById(id).style.color = "red";
+    //   alert(id);
+    // }
+    
     const handleClick = (id, leveldata, idcon) => {
       setIDLevel(idcon)
       leveldata==="0" ? openid===id ? setOpen(!open) : open===false ? setOpen(!open) :setOpen(open) :setOpen(open);
@@ -36,7 +41,11 @@ function ListItem(){
       {name: "LV3-1-2", id : '8', level : '2' , parent: '5', link : '#'},
       {name: "LV3-2-1", id : '8', level : '2' , parent: '6', link : '#'},
     ]
-
+    
+  function setStyle(data) {
+    dispatch(actionsMenu.setActiveselect(data))
+  }
+    
     const menuLVCha = menuitemjs.filter(item => item.level === "0");
     // console.log(menuLVCha.map((row) => console.log(row)));
     // console.log("kiemtracon", menuLVCha)
@@ -47,9 +56,10 @@ function ListItem(){
     const menulink = (data) => {
       return(
         <React.Fragment>
-            <Link to={data.link} className="nav-link" style={{textDecoration: "none", color: "inherit"}}>
-              <ListItemButton>
-                <ListItemIcon>
+          
+            <Link to={data.link} className="nav-link" style={{textDecoration: "none", color: "inherit"}} >
+              <ListItemButton onClick={() => setStyle(data.id)} selected={userStatemenu.activeselect === data.id}>
+                <ListItemIcon >
                   <PeopleIcon />
               </ListItemIcon>
                 <ListItemText  >{data.name}</ListItemText>
@@ -58,7 +68,7 @@ function ListItem(){
         </React.Fragment>
       )
     }
-
+    console.log(userStatemenu.activeselect)
   return(
       <React.Fragment>
         {

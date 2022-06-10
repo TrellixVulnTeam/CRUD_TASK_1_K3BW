@@ -51,6 +51,8 @@ function DataUser({onClose, setload, rows, pagelength}) {
     const updateRow = async (row) => {
         dispatch(actionsNhanVien.setOpen(true))
         dispatch(actionsNhanVien.setDataFormUpdate(row));
+    alert("a");
+
     };
     
     return (
