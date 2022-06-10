@@ -1,15 +1,12 @@
-import React , { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import axios from "axios";
 import FormAccount from '../../formaccount';
-import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle, TableFooter} from '@mui/material';
+import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle} from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Paginate from '../paginate'
 import {useDispatch, useSelector} from 'react-redux';
-import accountAction from '../../../../reducers/actions/accountAction';
-
-
+import accountAction from 'reducers/actions/accountAction';
 
 
 function DataList({onClose, setload}){
@@ -43,7 +40,7 @@ function DataList({onClose, setload}){
             <TableBody  >
                 {stateaccount.data.map((row) => (
                     <TableRow key={'0'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                        {console.log(row)}
+                        {/* {console.log(row)} */}
                         
                         <TableCell component="th" scope="row">{row.id}</TableCell>
                         <TableCell component="th" scope="row">{row.name}</TableCell>

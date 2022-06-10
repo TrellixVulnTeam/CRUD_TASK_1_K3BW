@@ -4,7 +4,6 @@ import './style.css';
 import { Button,TextField,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {useDispatch, useSelector} from 'react-redux';
-import accountAction from '../../../reducers/actions/accountAction';
 
 function FormAccount({onClose, setload}){
 
@@ -36,7 +35,6 @@ function FormAccount({onClose, setload}){
                 onClose();
             });
         }else console.log("false");
-      
   };
   
   // if(!data) return;

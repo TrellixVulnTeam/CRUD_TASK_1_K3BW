@@ -1,24 +1,42 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Navigate, Router, Routes, Route } from 'react-router-dom'
-import Dashboard from './pages/dashboard';
 import ListUsers from './pages/users/listUsers';
 import Login from './pages/auth/login'
+import Dashboard from './pages/dashboard';
 import ForgotPassword from './pages/auth/forgotpassword'
 import Account from './pages/account/listaccount';
 import Box from '@mui/material/Box';
-import {createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider, createMuiTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
-import Sidebar from 'components/sidebar';
+import Sidebar from 'layouts/sidebar';
 import Footer from 'components/footer';
-import Header from 'components/header'
+import Header from 'layouts/header'
 import SetKey from 'pages/auth/setkey';
-const mdTheme = createTheme();
+import Loadding from './layouts/loadding'
+import {useSelector, useDispatch} from 'react-redux';
+const LazyDashboard = React.lazy(() => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(import('./pages/dashboard')), 2000)
+  })
+});
+const LazyListUsers = React.lazy(() => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(import('./pages/users/listUsers')), 2000)
+  })
+});
+const LazyAccount = React.lazy(() => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(import('./pages/account/listaccount')), 2000)
+  })
+});
 
 function App() {
+// const mdTheme = createTheme();
   const [token, setToken] = useState(localStorage.getItem('token'));
-  console.log(window.location.href);
+	const userState = useSelector(state => state.sibar);
+  const muiTheme = createTheme(userState.theme);
 
   if(!token) {
     return (
@@ -27,17 +45,17 @@ function App() {
         <Route path='/forgotpassword' element={<ForgotPassword setToken = {setToken}/> } />
         <Route path='/setkey' element={<SetKey setToken = {setToken}/> } />
       </Routes>
-      // <Login setToken = {setToken}/>
     )
   }
   
   
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    <ThemeProvider theme={muiTheme}>
+      <Suspense fallback={<Loadding></Loadding>}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-
+       
         
         <Sidebar />
         
@@ -53,17 +71,19 @@ function App() {
             overflow: 'auto',
           }}
         >
-          <Toolbar />
+       
+          <Toolbar color="backgroundColor"/>
+          
               <Routes>
-                <Route path='/' element={<Dashboard/>} />
-                <Route path='/listusers' element={<ListUsers/>} />
-                <Route path='/listaccount' element={<Account/> } />
+                <Route path='/' element={<LazyDashboard/>} />
+                <Route path='/listusers' element={<LazyListUsers/>} />
+                <Route path='/listaccount' element={<LazyAccount/> } />
               </Routes>
             <Footer sx={{ pt: 4 }} />
         </Box>
       </Box>
+      </Suspense>
     </ThemeProvider>
-   
     
   );
 }

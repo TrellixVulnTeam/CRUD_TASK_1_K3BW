@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState } from 'react';
+
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -19,6 +21,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from 'react-router-dom';
 
+import Darklight from './darklight';
+import {createMuiTheme } from '@mui/material/styles';
 
 const drawerWidth = 240;
 
@@ -88,12 +92,21 @@ function Sidebar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [toggleDark, settoggleDark] = useState(false);
+  const mdTheme = createMuiTheme({
+    // Theme settings
+    palette: {
+      type: toggleDark ? "dark" : "light",
+    },
+  });
   return (
         <>
+         
             <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
+              backgroundColor: '#1976d2',
             }}
           >
             <IconButton
@@ -117,9 +130,10 @@ function Sidebar() {
             >
               Dashboard
             </Typography>
+            <div style={{display: "flex"}}><Darklight /></div>
               <h5>Hello:{localStorage.getItem('email')}</h5>
             <IconButton color="inherit" onClick={handleClick} > 
-              
+    
               <Badge color="secondary">
                 <NotificationsIcon />
               </Badge>

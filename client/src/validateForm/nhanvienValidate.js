@@ -2,16 +2,19 @@ import React from "react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import moment from "moment";
 
-const ValidateFrom = () =>{
+
+const ValidateFrom = (data) =>{
     const formik = useFormik({
         initialValues: {
-            name : '',
-            email: '',
+            id : data.id,
+            name : data.name,
+            email: data.email,
             sex: 'Male',
-            address: '',
-            age: '',
-            date: '',
+            address: data.address,
+            age: data.age,
+            date: moment(data.date).format('YYYY-MM-DD'),
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Required!"),
@@ -22,7 +25,7 @@ const ValidateFrom = () =>{
             date: Yup.date().default(() => new Date()).required("Required!"),
         })
     });
-    console.log('formik',formik);
+    console.log(formik.values);
     return formik;
 }
 export default ValidateFrom;

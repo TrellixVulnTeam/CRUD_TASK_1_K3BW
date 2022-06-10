@@ -1,8 +1,6 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import ListUser from '..';
-import { getScopedCssBaselineUtilityClass } from '@mui/material';
 
 
 function Paginate(props) {

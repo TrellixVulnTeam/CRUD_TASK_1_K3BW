@@ -7,9 +7,9 @@ import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DataList from './datalist';
 import {useDispatch, useSelector} from 'react-redux';
-// import accountredux from "../../../reducers/accountredux";
-import accountAction from '../../../reducers/actions/accountAction'
-import actionsNhanVien from "../../../reducers/actions/nhavienAction";
+import accountAction from 'reducers/actions/accountAction'
+import { makeStyles } from '@material-ui/core/styles';
+import Zoom from '@material-ui/core/Zoom';
 
 function ListAccount(){
     const stateAccount = useSelector(state => state.account);
@@ -27,10 +27,8 @@ function ListAccount(){
         }
         if(stateAccount.timeout === true) dispatch(accountAction.setTimeOut(false));
         else dispatch(accountAction.setTimeOut(true));
-        // console.log('pages: ' , {pages});
     }
     useEffect(() => {
-
         axios.get('http://localhost:3001/account/listaccount',{
             params: {
                 pages: stateAccount.page
@@ -45,7 +43,6 @@ function ListAccount(){
         .catch(err => console.log("aaaa"));
     },[stateAccount.timeout]);
     const [open, setOpen] = React.useState(false);
-    console.log('timeout: ' , stateAccount.timeout);
     /**
      * dung de off form
      */
@@ -61,45 +58,79 @@ function ListAccount(){
         dispatch(accountAction.setOpen(true));
         // setOpen(true);
     };
+    const useStyles = makeStyles((theme) => ({
+        root: {
+          height: 180,
+        },
+        container: {
+          display: 'flex',
+        },
+        paper: {
+          margin: theme.spacing(1),
+        },
+        svg: {
+          width: 100,
+          height: 100,
+        },
+        polygon: {
+          fill: theme.palette.common.white,
+          stroke: theme.palette.divider,
+          strokeWidth: 1,
+        },
+      }));
+      const classes = useStyles();
     return(
-        <TableContainer style={{padding:"25px"}} component={Paper}>
-            <Stack style={{display:"flex", justifyContent: "right"}} spacing={2} direction="row">
-            <Button variant="contained" onClick={addform}>ADD  <AddCircleIcon/> </Button>
-            </Stack>
-            <center><h2>FORM LIST</h2></center>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" border="5px solid #000">
-                <TableHead>
-                    
-                    <TableRow>
-                        <TableCell >ID</TableCell>
-                        <TableCell align="right">Name</TableCell>
-                        <TableCell align="right">Email</TableCell>
-                        <TableCell align="right">Ten Phong Ban</TableCell>
-                        <TableCell align="right">Token</TableCell>
-                        <TableCell align="right">Action</TableCell>
-                    </TableRow>
-                </TableHead>
-                <DataList onClose={handleClose} setload={onLoad} rows={stateAccount.data} pagelength = {stateAccount.pagelength}/>
-            </Table>
+        <Zoom in={true} container spacing={3}  item xs={12} md={8} lg={9}>
+        <Paper 
+        elevation={4} 
+        className={classes.paper}
+        sx={{
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          }}
+        >
+            <TableContainer style={{padding:"25px"}} component={Paper}>
+                <Stack style={{display:"flex", justifyContent: "right"}} spacing={2} direction="row">
+                <Button variant="contained" onClick={addform} style={{backgroundColor:'#1976d2'}}>ADD  <AddCircleIcon/> </Button>
+                </Stack>
+                <center><h2>FORM LIST</h2></center>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        
+                        <TableRow>
+                            <TableCell >ID</TableCell>
+                            <TableCell align="right">Name</TableCell>
+                            <TableCell align="right">Email</TableCell>
+                            <TableCell align="right">Ten Phong Ban</TableCell>
+                            <TableCell align="right">Token</TableCell>
+                            <TableCell align="right">Action</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <DataList onClose={handleClose} setload={onLoad} rows={stateAccount.data} pagelength = {stateAccount.pagelength}/>
+                </Table>
 
-            <>
-                <Dialog
-                    open={stateAccount.open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Form Add Thong Tin Nhan Vien"}
-                    </DialogTitle>
-                    <FormAccount onClose={handleClose} setload={onLoad}  data={stateAccount.data} dataNV = {stateAccount.dataNV} dataPB = {stateAccount.dataPB}/>
+                <>
+                    <Dialog
+                        open={stateAccount.open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            {"Form Add Thong Tin Nhan Vien"}
+                        </DialogTitle>
+                        <FormAccount onClose={handleClose} setload={onLoad}  data={stateAccount.data} dataNV = {stateAccount.dataNV} dataPB = {stateAccount.dataPB}/>
 
-                    <DialogActions>
-                        <Button onClick={handleClose}>Close</Button>
-                    </DialogActions>
-                </Dialog>
-            </>
-        </TableContainer>
+                        <DialogActions>
+                            <Button onClick={handleClose}>Close</Button>
+                        </DialogActions>
+                    </Dialog>
+                </>
+            </TableContainer>
+        </Paper>
+          
+          </Zoom>
     );
 }
 export default ListAccount;

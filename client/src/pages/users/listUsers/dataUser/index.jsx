@@ -1,14 +1,14 @@
-import React , { useState } from 'react';
+import {React}  from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import UserForm from '../../formUsers';
-import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle, TableFooter} from '@mui/material';
+import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle} from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Paginate from '../paginate'
 import {useDispatch, useSelector} from 'react-redux';
-import actionsNhanVien from '../../../../reducers/actions/nhavienAction';
-import nhanvienredux from '../../../../reducers/nhanvienredux';
+import actionsNhanVien from 'reducers/actions/nhavienAction';
+import moment from 'moment';
 
  DataUser.propTypes = {
     rows: PropTypes.array,
@@ -43,6 +43,11 @@ function DataUser({onClose, setload, rows, pagelength}) {
             .catch(err => console.log("aaaa"));
           }
     };
+
+    const convertDate = (date) => {
+        return moment(date).format('DD/MM/YYYY');
+    }
+
     const updateRow = async (row) => {
         dispatch(actionsNhanVien.setOpen(true))
         dispatch(actionsNhanVien.setDataFormUpdate(row));
@@ -53,13 +58,11 @@ function DataUser({onClose, setload, rows, pagelength}) {
             <TableBody >
                 {userState.data.map((row) => (
                     <TableRow  key={'0'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                        {console.log(row)}
-                        
                         <TableCell component="th" scope="row">{row.id}</TableCell>
                         <TableCell component="th" scope="row">{row.name}</TableCell>
                         <TableCell align="right">{row.age}</TableCell>
                         <TableCell align="right">{row.sex}</TableCell>
-                        <TableCell align="right">{row.date}</TableCell>
+                        <TableCell align="right">{convertDate(row.date)}</TableCell>
                         <TableCell align="right">{row.email}</TableCell>
                         <TableCell align="right">{row.address}</TableCell>
                         <TableCell align="right">
