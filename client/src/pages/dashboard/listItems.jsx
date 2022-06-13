@@ -24,6 +24,7 @@ function ListItem(){
     
     leveldata!=="0" ? idlevel!== idcon ? dispatch(actionsMenu.setOpenLevel(leveldata)) :dispatch(actionsMenu.setIDLevel('')):dispatch(actionsMenu.setOpenLevel(leveldata));
     dispatch(actionsMenu.setOpenID(id))
+    
     // setIDLevel(idcon)
     // leveldata==="0" ? openid===id ? setOpen(!open) : open===false ? setOpen(!open) :setOpen(open) :setOpen(open);
     
