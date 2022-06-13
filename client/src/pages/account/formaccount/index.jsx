@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import axios from "axios";
 import './style.css';
-import { Button,TextField,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
+import { Button,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 function FormAccount({onClose, setload}){
-
   const stateaccount = useSelector(state => state.account);
   const data = stateaccount.dataformupdate;
   const [idNV, setIDNV] = useState(data.idNV);
@@ -15,7 +14,6 @@ function FormAccount({onClose, setload}){
     idNV: idNV,
     idPB: idPB,
   }
-
   /**
    * formusers de goi api cua create va update, neu form co id sex run URL APi update, nguoc lai thi sex run URL API create.
    */

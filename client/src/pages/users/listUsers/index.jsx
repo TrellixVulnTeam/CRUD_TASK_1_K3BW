@@ -8,7 +8,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DataUser from "./dataUser";
 import {useSelector, useDispatch} from 'react-redux'
 import actionsNhanVien from "reducers/actions/nhavienAction";
-
 import { makeStyles } from '@material-ui/core/styles';
 import Zoom from '@material-ui/core/Zoom';
 /**
@@ -55,7 +54,6 @@ function ListUsers() {
         dispatch(actionsNhanVien.setOpen(false));
         // setOpen(false);
     };
-
     /**
      * dung de on form
      */
@@ -83,7 +81,7 @@ function ListUsers() {
           strokeWidth: 1,
         },
       }));
-      const classes = useStyles();
+    const classes = useStyles();
       
     return (
         <Zoom in={true} container spacing={3}  item xs={12} md={8} lg={9}>
@@ -102,10 +100,7 @@ function ListUsers() {
                 </Stack>
                 <center><h2>FORM-LIST</h2></center>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" >
-                
                     <TableHead>
-                    
-                        
                         <TableRow>
                             <TableCell >ID</TableCell>
                             <TableCell align="right">Name</TableCell>
@@ -138,7 +133,6 @@ function ListUsers() {
                 </>
             </TableContainer>
         </Paper>
-          
       </Zoom>
     );
 }

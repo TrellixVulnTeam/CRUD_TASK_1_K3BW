@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import FormAccount from '../formaccount';
 import './style.css';
@@ -21,6 +21,10 @@ function ListAccount(){
     /**
      * 
      */
+    const usememos = useMemo(() => {
+            alert("a");
+        
+    },[stateAccount.page]);
     const onLoad = (pages) =>{
         if(pages){
             dispatch(accountAction.setPage(pages));
@@ -126,6 +130,8 @@ function ListAccount(){
                             <Button onClick={handleClose}>Close</Button>
                         </DialogActions>
                     </Dialog>
+                    {usememos}
+
                 </>
             </TableContainer>
         </Paper>

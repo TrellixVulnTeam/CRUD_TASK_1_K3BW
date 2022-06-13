@@ -28,20 +28,19 @@ function DataUser({onClose, setload, rows, pagelength}) {
     const handleClose = () => {
         dispatch(actionsNhanVien.setOpen(false));
     };
-    
     /**
      * function deleteRow chuyen huong den URL API delete.
      * @param {*} id 
      */
     const deleteRow = async (id) => {
-        if (window.confirm("Are you sure you want to delete?")) {
+        if (window.confirm("Are you sure you want to delete?")){
             axios.delete('http://localhost:3001/delete/'+ id)
             .then((res) => {
                 alert(res.data)
                 setload();
             })
             .catch(err => console.log("aaaa"));
-          }
+        }
     };
 
     const convertDate = (date) => {
@@ -78,8 +77,6 @@ function DataUser({onClose, setload, rows, pagelength}) {
                     </TableCell>
                 </TableRow>
             </TableBody>
-            
-
             <>
                 <Dialog
                     open={userState.open}
