@@ -7,13 +7,11 @@ import {List, Collapse} from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {ExpandLess, ExpandMore} from '@material-ui/icons';
 import actionsMenu from 'reducers/actions/menu';
+import actionsNhanVien from "reducers/actions/nhavienAction";
+
 function ListItem(){
   const userStatemenu = useSelector(state => state.menu);
 	const dispatch = useDispatch();
-  // const [open, setOpen] = React.useState(false);
-  // const [openlevel, setOpenLevel] = React.useState('');
-  // const [openid, setOpenID] = React.useState('');
-  // const [idlevel, setIDLevel] = React.useState('');
   const open = userStatemenu.open;
   const openlevel = userStatemenu.openlevel;
   const openid = userStatemenu.openid;
@@ -21,15 +19,8 @@ function ListItem(){
   const handleClick = (id, leveldata, idcon) => {
     dispatch(actionsMenu.setIDLevel(idcon));
     leveldata==="0" ? openid===id ? dispatch(actionsMenu.setOpen(!open)) : open===false ? dispatch(actionsMenu.setOpen(!open)) :dispatch(actionsMenu.setOpen(open)) :dispatch(actionsMenu.setOpen(open));
-    
     leveldata!=="0" ? idlevel!== idcon ? dispatch(actionsMenu.setOpenLevel(leveldata)) :dispatch(actionsMenu.setIDLevel('')):dispatch(actionsMenu.setOpenLevel(leveldata));
-    dispatch(actionsMenu.setOpenID(id))
-    
-    // setIDLevel(idcon)
-    // leveldata==="0" ? openid===id ? setOpen(!open) : open===false ? setOpen(!open) :setOpen(open) :setOpen(open);
-    
-    // leveldata!=="0" ? idlevel!== idcon ? setOpenLevel(leveldata) :setIDLevel(''):setOpenLevel(openlevel);
-    // setOpenID(id)
+    dispatch(actionsMenu.setOpenID(id));
   };
 
   const menuitemjs = [
@@ -48,11 +39,15 @@ function ListItem(){
     {name: "LV3-1-1", id : '13', level : '2' , parent: '11', link : '/#'},
     {name: "LV3-1-2", id : '14', level : '2' , parent: '11', link : '/listaccount'},
     {name: "LV3-2-1", id : '15', level : '2' , parent: '12', link : '/#'},
+    {name: "Create QR code", id : '16', level : '0' , parent: '0', link : '/createqrcode'},
+
   ]
     
   function setStyle(data, level) {
     level === '0' ? dispatch(actionsMenu.setOpen(false)) : dispatch(actionsMenu.setOpen(true));
     dispatch(actionsMenu.setActiveselect(data))
+    dispatch(actionsNhanVien.setPage(1));
+
   }
   const menuLVCha = menuitemjs.filter(item => item.level === "0");
   const menuLVCon = (itemCon) =>{
@@ -70,7 +65,7 @@ function ListItem(){
       </React.Fragment>
     )
   }
-  // const menuLinkMemo = React.useMemo(() => menulink(data), [data])
+  
   return(
   <React.Fragment>
     {

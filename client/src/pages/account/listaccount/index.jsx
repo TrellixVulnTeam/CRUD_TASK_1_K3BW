@@ -21,10 +21,10 @@ function ListAccount(){
     /**
      * 
      */
-    const usememos = useMemo(() => {
-            alert("a");
+    const Memos = () => {useMemo(() => {
+            // alert("a");
         
-    },[stateAccount.page]);
+    },[stateAccount.page])};
     const onLoad = (pages) =>{
         if(pages){
             dispatch(accountAction.setPage(pages));
@@ -83,6 +83,7 @@ function ListAccount(){
         },
       }));
       const classes = useStyles();
+      
     return(
         <Zoom in={true} container spacing={3}  item xs={12} md={8} lg={9}>
         <Paper 
@@ -130,7 +131,7 @@ function ListAccount(){
                             <Button onClick={handleClose}>Close</Button>
                         </DialogActions>
                     </Dialog>
-                    {usememos}
+                    {Memos()}
 
                 </>
             </TableContainer>

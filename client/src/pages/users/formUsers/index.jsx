@@ -54,7 +54,7 @@ function UserForm({onClose, setload}) {
         onClose();
       });
     }else{
-      if(formik.dirty === true && !formik.errors.name && !formik.errors.age && !formik.errors.sex && !formik.errors.address && !formik.errors.date && !formik.errors.email){
+      if(formik.dirty === true && JSON.stringify(formik.errors) === '{}'){
         axios({
           method: 'post',
           url: 'http://localhost:3001/create',
@@ -87,10 +87,6 @@ function UserForm({onClose, setload}) {
                 id="fullWidth" 
                 defaultValue={userState.dataformupdate.name}
                 onChange={formik.handleChange}
-                // onChange={(event) => {
-                //   formik.handleChange();
-                //   // setName(event.target.value);
-                // }}
               />
               {formik.errors.name &&  (
             <p style={{color : "red", margin : "0px",float: "left"}} >{formik.errors.name}</p>
@@ -104,10 +100,6 @@ function UserForm({onClose, setload}) {
                 id="fullWidth" 
                 defaultValue={userState.dataformupdate.age}
                 onChange={formik.handleChange}
-
-                // onChange={(event) => {
-                //   setAge(event.target.value);
-                // }}
               />
               {formik.errors.age &&  ( <p style={{color : "red", margin : "0px",float: "left"}} >{formik.errors.age}</p>)}
             </div>

@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 
 function Loadding(props) {
   return (
-    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+    <Box sx={{ position: 'relative', display: 'inline-flex' , padding: '300px'}}>
       <CircularProgress variant="determinate" {...props} />
       <Box
         sx={{
@@ -38,11 +38,11 @@ Loadding.propTypes = {
 };
 
 export default function CircularStatic() {
-  const [progress, setProgress] = React.useState(10);
+  const [progress, setProgress] = React.useState(30);
 
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 45));
+      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 70));
     }, 800);
     return () => {
       clearInterval(timer);

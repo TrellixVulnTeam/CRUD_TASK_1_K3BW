@@ -25,7 +25,6 @@ const ValidateFrom = (data) =>{
             date: Yup.date().default(() => new Date()).required("Required!"),
         })
     });
-    console.log(formik.values);
     return formik;
 }
 export default ValidateFrom;

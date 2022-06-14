@@ -1,26 +1,14 @@
 import * as React from 'react';
 import { useState } from 'react';
-
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
+import {List, Divider, Menu, MenuItem, Badge, IconButton, Typography, Toolbar} from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import { mainListItems, secondaryListItems } from '../../pages/dashboard/listItems';
 import ListItem from '../../pages/dashboard/listItems';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from 'react-router-dom';
-
 import Darklight from './darklight';
 import {createMuiTheme } from '@mui/material/styles';
 
@@ -94,7 +82,6 @@ function Sidebar() {
   };
   const [toggleDark, settoggleDark] = useState(false);
   const mdTheme = createMuiTheme({
-    // Theme settings
     palette: {
       type: toggleDark ? "dark" : "light",
     },
@@ -132,12 +119,12 @@ function Sidebar() {
             </Typography>
             <div style={{display: "flex"}}><Darklight /></div>
               <h5>Hello:{localStorage.getItem('email')}</h5>
-            <IconButton color="inherit" onClick={handleClick} > 
+            <IconButton color="inherit" onClick={handleClick} style={{boxShadow:"none"}}> 
     
               <Badge color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton >
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
@@ -146,6 +133,7 @@ function Sidebar() {
               MenuListProps={{
                 'aria-labelledby': 'basic-button',
               }}
+              
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>

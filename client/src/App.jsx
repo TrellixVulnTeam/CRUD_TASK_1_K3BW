@@ -16,29 +16,43 @@ import Header from 'layouts/header'
 import SetKey from 'pages/auth/setkey';
 import Loadding from './layouts/loadding'
 import {useSelector, useDispatch} from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import QRCode from './pages/QRCode';
+
+
 const LazyDashboard = React.lazy(() => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(import('./pages/dashboard')), 2000)
+    setTimeout(() => resolve(import('./pages/dashboard')), 1000)
   })
 });
 const LazyListUsers = React.lazy(() => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(import('./pages/users/listUsers')), 2000)
+    setTimeout(() => resolve(import('./pages/users/listUsers')), 1000)
   })
 });
 const LazyAccount = React.lazy(() => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(import('./pages/account/listaccount')), 2000)
+    setTimeout(() => resolve(import('./pages/account/listaccount')), 1000)
   })
 });
 
 function App() {
+  let navigate = useNavigate();
 // const mdTheme = createTheme();
   const [token, setToken] = useState(localStorage.getItem('token'));
 	const userState = useSelector(state => state.sibar);
   const muiTheme = createTheme(userState.theme);
 
   if(!token) {
+    // console.log(window.location.pathname);
+    if(window.location.pathname !== "/login" ){
+      if(window.location.pathname !== "/forgotpassword" ){
+        if(window.location.pathname !== "/setkey" ){
+          window.location.href = '/login';
+        }
+      }
+    }
+    
     return (
       <Routes>
         <Route path='/login' element={<Login setToken = {setToken}/> } />
@@ -78,6 +92,7 @@ function App() {
                 <Route path='/' element={<LazyDashboard/>} />
                 <Route path='/listusers' element={<LazyListUsers/>} />
                 <Route path='/listaccount' element={<LazyAccount/> } />
+                <Route path='/createqrcode' element={<QRCode/> } />
               </Routes>
             <Footer sx={{ pt: 4 }} />
         </Box>

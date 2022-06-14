@@ -25,6 +25,8 @@ function ListUsers() {
      * 
      */
     const onLoad = (pages) =>{
+        console.log('pages', pages)
+
         if(pages){
             dispatch(actionsNhanVien.setPage(pages))
         }
@@ -32,6 +34,8 @@ function ListUsers() {
         else dispatch(actionsNhanVien.setTimeout(true));
     }
     useEffect(() => {
+        console.log(userState.page)
+
         axios.get('http://localhost:3001/listdata/',{
             params: {
                 pages: userState.page
@@ -117,7 +121,6 @@ function ListUsers() {
                 <>
                     <Dialog
                         open={userState.open}
-                        onClose={handleClose}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                     >
