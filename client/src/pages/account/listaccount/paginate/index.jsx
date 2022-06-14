@@ -11,12 +11,11 @@ function Paginate(props) {
     };
     const RenderPagination = useMemo(() => (
         <div>
-            {alert()}
             <Stack spacing={2}>
             <Pagination  style={{display:"flex", justifyContent: "center"}}  count={props.pagelength}  color="primary"  onChange={handleChange} />
             </Stack>
         </div>
-    ),[stateAccount.page]);
+    ),[stateAccount.page,props.pagelength]);
     // alert("menu")
     // const RenderPagination = (
     //     <div>
@@ -28,11 +27,6 @@ function Paginate(props) {
     // )
     return (
         RenderPagination
-        // <div>
-        //     <Stack spacing={2}>
-        //     <Pagination  style={{display:"flex", justifyContent: "center"}}  count={props.pagelength}  color="primary"  onChange={handleChange} />
-        //     </Stack>
-        // </div>
     );
 }
 

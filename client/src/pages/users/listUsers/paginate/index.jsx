@@ -14,14 +14,9 @@ function Paginate(props) {
                 <Pagination style={{display:"flex", justifyContent: "center"}} count={props.pagelength}  color="primary"  onChange={handleChange} />
             </Stack>
         </div>
-    ),[stateuser.page]);
+    ),[stateuser.page,props.pagelength]);
     return (
         RenderPagination
-        // <div>
-        //     <Stack spacing={2}>
-        //     <Pagination style={{display:"flex", justifyContent: "center"}} count={props.pagelength}  color="primary"  onChange={handleChange} />
-        //     </Stack>
-        // </div>
     );
 }
 
