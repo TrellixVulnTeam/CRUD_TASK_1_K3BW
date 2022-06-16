@@ -3,11 +3,10 @@
 const initialState = {
     theme :  {
         palette: {
-          mode: 'light',
+          mode: localStorage.getItem('darklight'),
         },
       }
 };
-
 
 
 function slibarredux(state = initialState, action) {

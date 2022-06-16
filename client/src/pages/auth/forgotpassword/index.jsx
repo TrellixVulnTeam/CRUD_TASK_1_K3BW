@@ -9,7 +9,7 @@ function Header(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" to="https://mui.com/">
-        Your Website
+        DUC AST FPTTELECOM
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

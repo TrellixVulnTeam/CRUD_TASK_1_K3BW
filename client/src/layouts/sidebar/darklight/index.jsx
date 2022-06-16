@@ -1,9 +1,8 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {useSelector, useDispatch} from 'react-redux';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Button from "@material-ui/core/Button";
-import actionsSlibar from "../../../reducers/actions/sibarAction";
+import {Brightness7, Brightness4} from '@mui/icons-material';
+import actionsSlibar from "reducers/actions/sibarAction";
+import IconButton from '@mui/material/IconButton';
 
 
 
@@ -18,22 +17,23 @@ function Darklight(){
 			mode: 'light',
 		  },
 	}
-	// const Memos =  useMemo(() => {
-	// 	// alert("a");
 	
-	// },[]);
 	const userState = useSelector(state => state.sibar);
 	const dispatch = useDispatch();
 	const toggleDarkTheme = () => {
 		if(userState.theme.palette.mode === 'dark'){
 			dispatch(actionsSlibar.setsibar(light))
-		}else dispatch(actionsSlibar.setsibar(drak))
+			localStorage.setItem('darklight','light');
+		}else{
+			dispatch(actionsSlibar.setsibar(drak));
+			localStorage.setItem('darklight','dark');
+		} 
 	};
     return(
 		<>
-			<Button  onClick={toggleDarkTheme} style={{boxShadow:"none"}}>
-				{userState.theme.palette.mode === 'dark' ? <Brightness7Icon  style={{color : '#fff'}}/> : <Brightness4Icon style={{color : '#fff'}}/>}
-			</Button>
+			<IconButton  onClick={toggleDarkTheme} style={{boxShadow:"none"}}>
+				{userState.theme.palette.mode === 'dark' ? <Brightness7  style={{color : '#fff'}}/> : <Brightness4 style={{color : '#fff'}}/>}
+			</IconButton>
 		</>
 	)
 };

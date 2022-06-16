@@ -13,15 +13,6 @@ import validateFrom from "validateForm/nhanvienValidate";
 function UserForm({onClose, setload}) {
   const userState = useSelector(state => state.nhanvien);
   const dispatch = useDispatch();
-  // const data = userState.dataformupdate;
-  // const [id, setID] = useState(data.id);
-  // const [name, setName] = useState(data.name);
-  // const [age, setAge] = useState(data.age);
-  // const [sex, setSex] = useState(data.sex);
-  // const [date, setDate] = useState(data.date);
-  // const [email, setEmail] = useState(data.email); 
-  // const [address, setAddress] = useState(data.address);
-  console.log('dataform',userState.dataformupdate);
   const formik = validateFrom(userState.dataformupdate);
   const dataForm = {
     id: formik.values.id,
@@ -32,12 +23,6 @@ function UserForm({onClose, setload}) {
     email: formik.values.email,
     address: formik.values.address,
   }
-  //kiem tra sex cos ton tai khong. neu khong gan gia trij mat dinh cho no la Male
-  // if(!dataForm.sex){setSex("Male")};
-
-  /**
-   * formusers de goi api cua create va update, neu form co id sex run URL APi update, nguoc lai thi sex run URL API create.
-   */
   const formusers = () =>{
     if(userState.dataformupdate.id){
       axios({

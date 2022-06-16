@@ -12,7 +12,7 @@ function Paginate(props) {
     const RenderPagination = useMemo(() => (
         <div>
             <Stack spacing={2}>
-            <Pagination  style={{display:"flex", justifyContent: "center"}}  count={props.pagelength}  color="primary"  onChange={handleChange} />
+                <Pagination  style={{display:"flex", justifyContent: "center"}}  count={props.pagelength}  color="primary"  onChange={handleChange} />
             </Stack>
         </div>
     ),[stateAccount.page,props.pagelength]);

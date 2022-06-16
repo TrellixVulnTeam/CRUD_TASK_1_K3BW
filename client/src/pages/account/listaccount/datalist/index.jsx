@@ -1,23 +1,19 @@
-import React from 'react';
+import {React, memo} from 'react';
 import axios from "axios";
 import FormAccount from '../../formaccount';
-import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle} from '@mui/material';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
+import {TableCell, TableRow, TableBody, Button, Dialog, DialogActions, DialogTitle, IconButton, Stack} from '@mui/material';
+import {DeleteForever, BorderColor} from '@mui/icons-material';
 import Paginate from '../paginate'
 import {useDispatch, useSelector} from 'react-redux';
 import accountAction from 'reducers/actions/accountAction';
 
 
-function DataList({onClose, setload}){
+function DataList({setload}){
     const stateaccount = useSelector(state => state.account);
     const dispatch = useDispatch();
-    // const [open, setOpen] = React.useState(false);
     const handleClose = () => {
         dispatch(accountAction.setOpen(false));
-    //   setOpen(false);
     };
-    
     /**
      * function deleteRow chuyen huong den URL API delete.
      * @param {*} id 
@@ -31,6 +27,7 @@ function DataList({onClose, setload}){
             .catch(err => console.log("aaaa"));
           }
     };
+
     const updateRow = async (row) => {
         dispatch(accountAction.setOpen(true));
         dispatch(accountAction.setDataFormUpdate(row));
@@ -48,7 +45,9 @@ function DataList({onClose, setload}){
                         <TableCell align="right">{row.tenphongban}</TableCell>
                         <TableCell align="right">{row.token}</TableCell>
                         <TableCell align="right">
-                            <button onClick={() => deleteRow(row.id)}><DeleteForeverIcon/></button> || <button onClick={() => updateRow(row)}><BorderColorIcon/></button>
+
+                            <Button style={{boxShadow: "none"}}  onClick={() => deleteRow(row.id)} >DELETE</Button>
+                            <Button style={{boxShadow: "none"}} onClick={() => updateRow(row)} >UPDATE</Button>
                         </TableCell>
                     </TableRow>
                 ))}
@@ -79,4 +78,4 @@ function DataList({onClose, setload}){
         </>
     );
 }
-export default DataList;
+export default memo(DataList);

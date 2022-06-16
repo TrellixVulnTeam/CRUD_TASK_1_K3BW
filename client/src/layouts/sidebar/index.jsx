@@ -12,6 +12,7 @@ import {useNavigate} from 'react-router-dom';
 import Darklight from './darklight';
 import {createMuiTheme } from '@mui/material/styles';
 
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -86,10 +87,16 @@ function Sidebar() {
       type: toggleDark ? "dark" : "light",
     },
   });
+
+
+
+  
+
+
+
   return (
         <>
-         
-            <AppBar position="absolute" open={open}>
+          <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -105,6 +112,7 @@ function Sidebar() {
                 marginRight: '36px',
                 ...(open && { display: 'none' }),
               }}
+              style={{boxShadow:"none"}}
             >
               <MenuIcon />
             </IconButton>
@@ -117,8 +125,8 @@ function Sidebar() {
             >
               Dashboard
             </Typography>
-            <div style={{display: "flex"}}><Darklight /></div>
-              <h5>Hello:{localStorage.getItem('email')}</h5>
+              <Darklight/>
+            <h5>Hello:{localStorage.getItem('email')}</h5>
             <IconButton color="inherit" onClick={handleClick} style={{boxShadow:"none"}}> 
     
               <Badge color="secondary">
@@ -151,7 +159,7 @@ function Sidebar() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            <IconButton style={{boxShadow:"none"}} onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>

@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import FormAccount from '../formaccount';
 import './style.css';
-import {Table, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions,DialogTitle} from '@mui/material';
-import Stack from '@mui/material/Stack';
+import {Table, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions,DialogTitle, Stack} from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DataList from './datalist';
 import {useDispatch, useSelector} from 'react-redux';
 import accountAction from 'reducers/actions/accountAction'
 import { makeStyles } from '@material-ui/core/styles';
 import Zoom from '@material-ui/core/Zoom';
+import { useMemo } from "react";
 
 function ListAccount(){
     const stateAccount = useSelector(state => state.account);
@@ -21,10 +21,6 @@ function ListAccount(){
     /**
      * 
      */
-    const Memos = () => {useMemo(() => {
-            // alert("a");
-        
-    },[stateAccount.page])};
     const onLoad = (pages) =>{
         if(pages){
             dispatch(accountAction.setPage(pages));
@@ -46,13 +42,11 @@ function ListAccount(){
         })
         .catch(err => console.log("aaaa"));
     },[stateAccount.timeout]);
-    const [open, setOpen] = React.useState(false);
     /**
      * dung de off form
      */
     const handleClose = () => {
         dispatch(accountAction.setOpen(false))
-        // setOpen(false);
     };
 
     /**
@@ -60,7 +54,6 @@ function ListAccount(){
      */
     const addform = () => {
         dispatch(accountAction.setOpen(true));
-        // setOpen(true);
     };
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -83,61 +76,61 @@ function ListAccount(){
         },
       }));
       const classes = useStyles();
+    //   const DataTable = useMemo(() => {
+    //     return <DataList onClose={handleClose} setload={onLoad} rows={stateAccount.data} pagelength = {stateAccount.pagelength}/>;
+        
+    // },[handleClose])
+     
       
     return(
         <Zoom in={true} container spacing={3}  item xs={12} md={8} lg={9}>
-        <Paper 
-        elevation={4} 
-        className={classes.paper}
-        sx={{
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          }}
-        >
-            <TableContainer style={{padding:"25px"}} component={Paper}>
-                <Stack style={{display:"flex", justifyContent: "right"}} spacing={2} direction="row">
-                <Button variant="contained" onClick={addform} style={{backgroundColor:'#1976d2'}}>ADD  <AddCircleIcon/> </Button>
-                </Stack>
-                <center><h2>FORM LIST</h2></center>
-                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                    <TableHead>
-                        
-                        <TableRow>
-                            <TableCell >ID</TableCell>
-                            <TableCell align="right">Name</TableCell>
-                            <TableCell align="right">Email</TableCell>
-                            <TableCell align="right">Ten Phong Ban</TableCell>
-                            <TableCell align="right">Token</TableCell>
-                            <TableCell align="right">Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <DataList onClose={handleClose} setload={onLoad} rows={stateAccount.data} pagelength = {stateAccount.pagelength}/>
-                </Table>
+            <Paper 
+            elevation={4} 
+            className={classes.paper}
+            sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            }}
+            >
+                <TableContainer style={{padding:"25px"}} component={Paper}>
+                    <Stack style={{display:"flex", justifyContent: "right"}} spacing={2} direction="row">
+                    <Button variant="contained" onClick={addform} style={{backgroundColor:'#1976d2'}}>ADD  <AddCircleIcon/> </Button>
+                    </Stack>
+                    <center><h1 style={{fontFamily: 'Lilly'}}>FORM LIST</h1></center>
+                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell >ID</TableCell>
+                                <TableCell align="right">Name</TableCell>
+                                <TableCell align="right">Email</TableCell>
+                                <TableCell align="right">Ten Phong Ban</TableCell>
+                                <TableCell align="right">Token</TableCell>
+                                <TableCell align="right">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {/* {DataTable} */}
+                        <DataList setload={onLoad} />
+                    </Table>
+                    <>
+                        <Dialog
+                            open={stateAccount.open}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Form Add Thong Tin Nhan Vien"}
+                            </DialogTitle>
+                            <FormAccount onClose={handleClose} setload={onLoad}/>
 
-                <>
-                    <Dialog
-                        open={stateAccount.open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">
-                            {"Form Add Thong Tin Nhan Vien"}
-                        </DialogTitle>
-                        <FormAccount onClose={handleClose} setload={onLoad}  data={stateAccount.data} dataNV = {stateAccount.dataNV} dataPB = {stateAccount.dataPB}/>
-
-                        <DialogActions>
-                            <Button onClick={handleClose}>Close</Button>
-                        </DialogActions>
-                    </Dialog>
-                    {Memos()}
-
-                </>
-            </TableContainer>
-        </Paper>
-          
-          </Zoom>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Close</Button>
+                            </DialogActions>
+                        </Dialog>
+                    </>
+                </TableContainer>
+            </Paper>
+        </Zoom>
     );
 }
 export default ListAccount;

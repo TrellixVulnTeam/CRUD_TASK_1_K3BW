@@ -102,7 +102,7 @@ function ListUsers() {
                 <Stack style={{display:"flex", justifyContent: "right"}} spacing={2} direction="row">
                 <Button  variant="contained" onClick={addform}>ADD  <AddCircleIcon/> </Button>
                 </Stack>
-                <center><h2>FORM-LIST</h2></center>
+                <center><h1 style={{fontFamily: 'Lilly'}}>FORM-LIST</h1></center>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" >
                     <TableHead>
                         <TableRow>

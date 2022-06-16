@@ -65,7 +65,9 @@ function DataUser({onClose, setload, rows, pagelength}) {
                         <TableCell align="right">{row.email}</TableCell>
                         <TableCell align="right">{row.address}</TableCell>
                         <TableCell align="right">
-                            <button onClick={() => deleteRow(row.id)}><DeleteForeverIcon/></button> || <button onClick={() => updateRow(row)}><BorderColorIcon/></button>
+                            <Button style={{boxShadow: "none"}}  onClick={() => deleteRow(row.id)} >DELETE</Button>
+                            <Button style={{boxShadow: "none"}} onClick={() => updateRow(row)} >UPDATE</Button>
+                            {/* <button onClick={() => deleteRow(row.id)}><DeleteForeverIcon/></button> || <button onClick={() => updateRow(row)}><BorderColorIcon/></button> */}
                         </TableCell>
                     </TableRow>
                 ))}

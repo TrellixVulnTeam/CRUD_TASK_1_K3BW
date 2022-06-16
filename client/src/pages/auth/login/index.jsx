@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import React, { useState } from 'react';
+import React from 'react';
 import {Avatar ,Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container, createTheme, ThemeProvider} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from "axios";
@@ -9,7 +9,7 @@ function Header(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" to="https://mui.com/">
-        Your Website
+        Duc AST FPTTELECOM
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -83,10 +83,10 @@ function Login(props){
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -101,11 +101,11 @@ function Login(props){
                   Forgot password?
                 </Link>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <Link to="#" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </Box>

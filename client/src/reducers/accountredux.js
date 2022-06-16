@@ -1,4 +1,3 @@
-
 const initialState = {
     data: [],
     timeout: true,
@@ -9,7 +8,6 @@ const initialState = {
     dataformupdate: [],
     open: false,
 };
-
 function accountredux(state = initialState, action){
     switch(action.type){
         case 'SET_DATA':

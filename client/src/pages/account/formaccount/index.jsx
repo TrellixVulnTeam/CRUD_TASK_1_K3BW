@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {memo, useState} from "react";
 import axios from "axios";
 import './style.css';
 import { Button,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
@@ -89,7 +89,7 @@ function FormAccount({onClose, setload}){
                 </Box>
              </div>
               <div className='textFieldItem'>
-                <Button onClick={formusers} variant="contained">Submit <AddCircleIcon/> </Button>
+                <Button onClick={formusers} variant="contained">Submit<AddCircleIcon/> </Button>
               </div>
           </form>
         </div>
@@ -98,4 +98,4 @@ function FormAccount({onClose, setload}){
     );
 }
 
-export default FormAccount;
+export default memo(FormAccount);

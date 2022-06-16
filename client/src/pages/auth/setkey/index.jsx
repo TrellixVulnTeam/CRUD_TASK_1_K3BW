@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-import React, { useState } from 'react';
-
-import {Avatar ,Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container, createTheme, ThemeProvider} from '@mui/material';
+import React from 'react';
+import {Avatar ,Button, CssBaseline, TextField, FormControlLabel, Checkbox, Box, Typography, Container, createTheme, ThemeProvider} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from "axios";
 
@@ -10,7 +9,7 @@ function Header(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" to="https://mui.com/">
-        Your Website
+        DUC AST FPTTELECOM
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
