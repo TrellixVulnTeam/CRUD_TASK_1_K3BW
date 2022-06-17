@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 
 
-function Show() {
+function Show({count2}) {
     console.log("test memo");
     const tich = 15;
     return (
         <div>
-            <h1>tich la: {tich}</h1>
+            <h1>tich la: {count2}</h1>
         </div>
     );
 }

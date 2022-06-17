@@ -14,28 +14,25 @@ function FormAccount({onClose, setload}){
     idNV: idNV,
     idPB: idPB,
   }
-  /**
-   * formusers de goi api cua create va update, neu form co id sex run URL APi update, nguoc lai thi sex run URL API create.
-   */
+
   const formusers = () =>{
-        if(dataForm.idNV && dataForm.idPB){
-            axios({
-                method: 'post',
-                url: 'http://localhost:3001/account/create',
-                data: dataForm
-            })
-            .then(function (res) {
-                alert(res.data);
-                setload();
-                onClose();
-            })
-            .catch(function (error) {
-                onClose();
-            });
-        }else console.log("false");
+    if(dataForm.idNV && dataForm.idPB){
+        axios({
+            method: 'post',
+            url: 'http://localhost:3001/account/create',
+            data: dataForm
+        })
+        .then(function (res) {
+            alert(res.data);
+            setload();
+            onClose();
+        })
+        .catch(function (error) {
+            onClose();
+        });
+    }else console.log("false");
   };
   
-  // if(!data) return;
     return(
         <div>
         <div className='container center' >
@@ -52,7 +49,6 @@ function FormAccount({onClose, setload}){
                         id: 'uncontrolled-native',
                       }}
                       onChange={(event) => {
-                          console.log(event.target.value);
                         setIDNV(event.target.value);
                       }}
                     >
@@ -76,7 +72,6 @@ function FormAccount({onClose, setload}){
                         id: 'uncontrolled-native',
                       }}
                       onChange={(event) => {
-                          console.log(event.target.value);
                           setIDPB(event.target.value);
                       }}
                     >
@@ -98,4 +93,4 @@ function FormAccount({onClose, setload}){
     );
 }
 
-export default memo(FormAccount);
+export default FormAccount;

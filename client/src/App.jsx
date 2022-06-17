@@ -18,7 +18,6 @@ import Loadding from './layouts/loadding'
 import {useSelector, useDispatch} from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import QRCode from './pages/QRCode';
-import Add from './pages/testmemo/add';
 
 
 const LazyDashboard = React.lazy(() => {
@@ -67,7 +66,7 @@ function App() {
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <Suspense fallback={<Loadding></Loadding>}>
+     
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
        
@@ -86,20 +85,19 @@ function App() {
             overflow: 'auto',
           }}
         >
-       
+        <Suspense fallback={<Loadding></Loadding>}>
           <Toolbar color="backgroundColor"/>
-          
-              <Routes>
-                <Route path='/' element={<LazyDashboard/>} />
-                <Route path='/listusers' element={<LazyListUsers/>} />
-                <Route path='/listaccount' element={<LazyAccount/> } />
-                <Route path='/createqrcode' element={<QRCode/> } />
-                <Route path='/test' element={<Add/> } />
-              </Routes>
-            <Footer sx={{ pt: 4 }} />
+          <Routes>
+            <Route path='/' element={<LazyDashboard/>} />
+            <Route path='/listusers' element={<LazyListUsers/>} />
+            <Route path='/listaccount' element={<LazyAccount/> } />
+            <Route path='/createqrcode' element={<QRCode/> } />
+          </Routes>
+          <Footer sx={{ pt: 4 }} />
+      </Suspense>
+
         </Box>
       </Box>
-      </Suspense>
     </ThemeProvider>
     
   );

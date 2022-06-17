@@ -8,6 +8,9 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {ExpandLess, ExpandMore} from '@material-ui/icons';
 import actionsMenu from 'reducers/actions/menu';
 import actionsNhanVien from "reducers/actions/nhavienAction";
+import MenuIcon from '@mui/icons-material/Menu';
+import ListIcon from '@mui/icons-material/List';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 function ListItem(){
   const userStatemenu = useSelector(state => state.menu);
@@ -58,7 +61,7 @@ function ListItem(){
       <React.Fragment>
           <Link to={data.link} className="nav-link" style={{textDecoration: "none", color: "inherit"}} >
             <ListItemButton onClick={() => setStyle(data.id , data.level)} selected={userStatemenu.activeselect === data.id}>
-              <ListItemIcon ><PeopleIcon /></ListItemIcon>
+              <ListItemIcon ><ArrowRightIcon /></ListItemIcon>
               <ListItemText  >{data.name}</ListItemText>
             </ListItemButton>
           </Link> 
@@ -75,7 +78,7 @@ function ListItem(){
         :(<>
             <ListItemButton button onClick={() => handleClick(row.id, row.level)} >
               <ListItemIcon>
-                <InboxIcon />
+                <MenuIcon />
               </ListItemIcon>
               <ListItemText primary={row.name} />
               {open && openid === row.id ? <ExpandLess /> : <ExpandMore />}
@@ -92,7 +95,7 @@ function ListItem(){
                   (<div style={{marginLeft:"20px"}}>
                       <ListItemButton button onClick={() => handleClick(rowcon.parent, rowcon.level, rowcon.id)}>
                         <ListItemIcon>
-                          <InboxIcon />
+                          <ListIcon />
                         </ListItemIcon>
                         <ListItemText primary={rowcon.name} />
                         {open && idlevel === rowcon.id ? <ExpandLess /> : <ExpandMore />}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { memo} from "react";
 import axios from "axios";
 import './style.css';
 import { Button,TextField,InputLabel,Box,FormControl,NativeSelect } from '@mui/material';
@@ -59,7 +59,6 @@ function UserForm({onClose, setload}) {
     }
       
   };
-
   return (
     <div>
       <div className='container center' >
@@ -150,4 +149,4 @@ function UserForm({onClose, setload}) {
     </div>
   );
 }
-export default UserForm;
+export default memo(UserForm);

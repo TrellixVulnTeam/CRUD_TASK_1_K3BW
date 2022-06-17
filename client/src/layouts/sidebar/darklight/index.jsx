@@ -5,13 +5,13 @@ import actionsSlibar from "reducers/actions/sibarAction";
 import IconButton from '@mui/material/IconButton';
 
 
-
 function Darklight(){
 	const drak = {
 		palette: {
 			mode: 'dark',
 		  },
 	}
+
 	const light = {
 		palette: {
 			mode: 'light',

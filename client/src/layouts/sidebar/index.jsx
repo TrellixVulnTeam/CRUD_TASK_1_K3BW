@@ -5,12 +5,14 @@ import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import {List, Divider, Menu, MenuItem, Badge, IconButton, Typography, Toolbar} from '@mui/material';
+import {List, Divider, Menu, MenuItem, Badge, IconButton, Typography, Toolbar, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ListItem from '../../pages/dashboard/listItems';
 import {useNavigate} from 'react-router-dom';
 import Darklight from './darklight';
 import {createMuiTheme } from '@mui/material/styles';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 const drawerWidth = 240;
@@ -32,7 +34,6 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
 
 function Sidebar() {
   const [open, setOpen] = React.useState(true);
@@ -130,7 +131,7 @@ function Sidebar() {
             <IconButton color="inherit" onClick={handleClick} style={{boxShadow:"none"}}> 
     
               <Badge color="secondary">
-                <NotificationsIcon />
+                <AccountCircleIcon />
               </Badge>
             </IconButton >
             <Menu
@@ -169,7 +170,17 @@ function Sidebar() {
             {/* {mainListItems} */}
             <Divider sx={{ my: 1 }} />
           </List>
+          <List component="nav">
+          <ListItemButton button onClick={logout} >
+            <ListItemIcon>
+              <LogoutIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </List>
+          
         </Drawer>
+        
         </>
         
   );
